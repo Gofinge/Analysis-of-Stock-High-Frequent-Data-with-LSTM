@@ -4,7 +4,7 @@ eps = 0.005
 class Config(dict):
     def __init__(self):
         # name of features
-        self['feature_name'] = ['aggressor_side', 'buy_amount', 'buy_vol', 'sale_amount', 'sale_vol', 'buy1', 'buy2', 'bc1', 'bc2', 'sale1', 'sale2', 'sc1', 'sc2']
+        self['feature_name'] = ['buy1', 'bc1',  'sale1', 'sc1']
 
         # name of labels
         self['label_name'] = ['mid_price_delta']
@@ -28,7 +28,7 @@ class Config(dict):
         self['epoch'] = 100
 
         # data file path
-        self['data_file_path'] = 'data/data.csv'
+        self['data_file_path'] = 'data/SH600031_18.6.15-18.6.20.csv'
 
         # use previous model
         self['use_previous_model'] = False
