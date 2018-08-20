@@ -2,6 +2,7 @@ import numpy as np
 from keras import backend as K
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
+import xgboost as xgb
 
 
 def data_transform(raw_data, time_step):
@@ -12,6 +13,16 @@ def data_transform(raw_data, time_step):
     for i in range(window_num):
         x.append(data[i:time_step + i, 0:data.shape[1] - 1])
         y.append(data[time_step + i - 1, -1])
+    return xgb.DMatrix(x, label=range(len(x[0]))), xgb.DMatrix(y)
+
+
+def data_transform_for_xgboost(raw_data):
+    data = np.array(raw_data)
+    x = []
+    y = []
+    for i in range(len(data)):
+        x.append(data[i, 0:data.shape[1] - 1])
+        y.append(data[i, -1])
     return np.array(x), np.array(y)
 
 
