@@ -5,7 +5,18 @@ import tensorflow as tf
 import xgboost as xgb
 
 
-def data_transform(raw_data, time_step):
+def data_transform_lstm(raw_data, time_step):
+    data = np.array(raw_data)
+    window_num = data.shape[0] - time_step + 1
+    x = []
+    y = []
+    for i in range(window_num):
+        x.append(data[i:time_step + i, 0:data.shape[1] - 1])
+        y.append(data[time_step + i - 1, -1])
+    return np.array(x), np.array(y)
+
+
+def data_transform_cnn(raw_data, time_step):
     data = np.array(raw_data)
     window_num = data.shape[0] - time_step + 1
     x = []
