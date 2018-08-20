@@ -26,8 +26,8 @@ data = data[feature_and_label_name].values
 data = feature_normalize(data)
 train_size = int(len(data) * conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
-train_x, train_y = data_transform(train, conf['time_step'])
-test_x, test_y = data_transform(test, conf['time_step'])
+train_x, train_y = data_transform_lstm(train, conf['time_step'])
+test_x, test_y = data_transform_lstm(test, conf['time_step'])
 
 # step 4: Create and train model
 network = LSTMs(conf)

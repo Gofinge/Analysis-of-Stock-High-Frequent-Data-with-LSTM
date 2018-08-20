@@ -15,7 +15,7 @@ K.clear_session()
 conf = Config()
 
 # step 1: Get dataset (csv)
-data = pd.read_csv('data.csv', encoding='gbk')
+data = pd.read_csv('SH600031_18.6.15-18.6.20.csv', encoding='gbk')
 
 # step 2: Select Feature
 price = data['price']
