@@ -22,7 +22,9 @@ def data_transform_cnn(raw_data, time_step):
     x = []
     y = []
     for i in range(window_num):
-        x.append(data[i:time_step + i, 0:data.shape[1] - 1])
+        temp = data[i:time_step + i, 0:data.shape[1] - 1]
+        temp = np.reshape(temp, (time_step, int((data.shape[1] - 1) / 2), 2))
+        x.append(temp)
         y.append(data[time_step + i - 1, -1])
     return np.array(x), np.array(y)
 

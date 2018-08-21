@@ -16,8 +16,8 @@ K.clear_session()
 
 conf = Config()
 
-file_path = os.getcwd()[:-5] + conf['data_file_path']
 # step 1: Get dataset (csv)
+file_path = os.getcwd()[:-5] + conf['data_file_path']
 data = pd.read_csv(file_path, encoding='gbk')
 
 # step 2: Select Feature
