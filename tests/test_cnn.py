@@ -8,6 +8,9 @@ import warnings
 import os
 import pandas as pd
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+warnings.filterwarnings("ignore")
+K.clear_session()
 
 cnn_conf = Config()
 cnn_conf.update(feature_name=['buy5', 'bc5', 'buy4', 'bc4', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
