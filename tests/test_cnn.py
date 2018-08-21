@@ -1,7 +1,7 @@
-from HF.config import *
-from HF.network import *
-from HF.utils import *
-from HF.evaluator import Evaluator
+from model.config import *
+from model.network import *
+from model.utils import *
+from model.evaluator import Evaluator
 from keras import backend as K
 import matplotlib.pyplot as plt
 import warnings
@@ -30,7 +30,7 @@ train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_cnn(train, cnn_conf['time_step'])
 test_x, test_y = data_transform_cnn(test, cnn_conf['time_step'])
 
-# step 4: Create and train model
+# step 4: Create and train model_weight
 network = CNN(cnn_conf)
 if cnn_conf['use_previous_model']:
     network.load(cnn_conf['file_name'])

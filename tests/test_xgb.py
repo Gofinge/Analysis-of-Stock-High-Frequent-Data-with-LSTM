@@ -1,20 +1,19 @@
-from HF.config import *
-from HF.network import *
-from HF.utils import *
-from HF.evaluator import Evaluator
+from model.config import *
+from model.network import *
+from model.utils import *
+from model.evaluator import Evaluator
 from keras import backend as K
 import matplotlib.pyplot as plt
 import warnings
 import os
 import pandas as pd
-import xgboost as xgb
-from HF.classifier import *
+from model.classifier import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
-conf = lstm_config()
+conf = LSTM_Config()
 
 # step 1: Get dataset (csv)
 file_path = os.getcwd()[:-5] + conf['data_file_path']
@@ -32,7 +31,7 @@ train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_for_xgboost(train)
 test_x, test_y = data_transform_for_xgboost(test)
 
-# step 4: Create and train model
+# step 4: Create and train model_weight
 
 xlf = XGB()
 if conf['use_previous_model']:

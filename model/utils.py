@@ -2,8 +2,6 @@ import numpy as np
 from keras import backend as K
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-import xgboost as xgb
-
 
 def data_transform_lstm(raw_data, time_step):
     data = np.array(raw_data)

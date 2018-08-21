@@ -82,7 +82,7 @@ class Evaluator:
         for i in range(part_num):
             part_y_true = y_true[i * part_size:(i + 1) * part_size]
             part_y_pred = y_pred[i * part_size:(i + 1) * part_size]
-            acc_list.append(self.evaluate_trend(part_y_true, part_y_pred))
+            acc_list.append(self.evaluate_trend_simple(part_y_true, part_y_pred))
         return acc_list
 
     def evaluate_one_hot_trend(self, y_true, y_pred):

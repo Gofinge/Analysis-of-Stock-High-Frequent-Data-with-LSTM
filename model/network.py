@@ -1,7 +1,7 @@
 from keras.models import Sequential
 from keras.layers.core import Dense, Flatten, Activation
 from keras.layers import LSTM, Conv2D, BatchNormalization
-from HF.utils import *
+from model.utils import *
 
 
 class Network:
@@ -67,7 +67,7 @@ class CNN(Network):
 
         input_shape = (self._time_step, int(self._feature_num / 2), 2)
 
-        model.add(Conv2D(input_shape=input_shape, filters=10, kernel_size=(3, 3)))
+        model.add(Conv2D(filters=10, input_shape=input_shape, kernel_sizFe=(3, 3)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
 
