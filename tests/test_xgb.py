@@ -15,8 +15,9 @@ K.clear_session()
 
 conf = Config()
 
+file_path = os.getcwd()[:-5] + conf['data_file_path']
 # step 1: Get dataset (csv)
-data = pd.read_csv('data.csv', encoding='gbk')
+data = pd.read_csv(file_path, encoding='gbk')
 
 # step 2: Select Feature
 feature_and_label_name = conf['feature_name']
@@ -66,4 +67,3 @@ plt.figure(figsize=(200, 15))
 plt.plot(test_y)
 plt.plot(test_pred)
 plt.show()
-

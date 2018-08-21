@@ -24,7 +24,7 @@ def data_transform_cnn(raw_data, time_step):
     for i in range(window_num):
         x.append(data[i:time_step + i, 0:data.shape[1] - 1])
         y.append(data[time_step + i - 1, -1])
-    return xgb.DMatrix(x, label=range(len(x[0]))), xgb.DMatrix(y)
+    return np.array(x), np.array(y)
 
 
 def data_transform_for_xgboost(raw_data):
