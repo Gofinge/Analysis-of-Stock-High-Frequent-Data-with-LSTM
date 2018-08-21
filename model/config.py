@@ -122,6 +122,8 @@ class LM_Config(Config):
                                 'bc1', 'bc2', 'bc3', 'bc4', 'bc5', 'sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'wb', 'lb', 'zmm',
                                 'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale']
 
+        # self['feature_name'] = ['bc1', 'sc1']
+
         # name of labels
         self['label_name'] = ['mid_price_delta']
 

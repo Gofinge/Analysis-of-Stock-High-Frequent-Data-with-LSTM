@@ -26,6 +26,7 @@ classify = False
 if classify:
     train_y = sign(train_y)
     test_y = sign(test_y)
+
     clf = RandomForestClassifier(n_estimators=100, max_depth=4)
 else:
     clf = RandomForestRegressor(n_estimators=100, max_depth=4)

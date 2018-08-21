@@ -3,6 +3,8 @@ from keras import backend as K
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 import csv
+from sklearn.neighbors import KDTree
+
 
 def data_transform_lstm(raw_data, time_step):
     data = np.array(raw_data)
@@ -122,3 +124,102 @@ def save_feature_selection(feature_list, acc):
     writer = csv.writer(csv_file)
     writer.writerow([acc] + feature_list)
     return
+
+
+def over_sampling_naive(train_x, train_y):
+    pos_indices = find_all_indices(train_y, 1)
+    neg_indices = find_all_indices(train_y, -1)
+    zero_indices = find_all_indices(train_y, 0)
+    pos_sample = np.array(train_x)[pos_indices]
+    neg_sample = np.array(train_x)[neg_indices]
+    pos_size = len(pos_sample)
+    neg_size = len(neg_sample)
+    zero_size = len(train_x) - pos_size - neg_size
+    power = zero_size / (pos_size + neg_size)
+
+    pos_sample = _over_sampling_naive(pos_sample, power)
+    neg_sample = _over_sampling_naive(neg_sample, power)
+
+    train_x = list(np.array(train_x)[zero_indices])
+    train_y = [0 for _ in range(zero_size)]
+    train_x.extend(pos_sample)
+    train_y.extend([1 for _ in range(len(pos_sample))])
+    train_x.extend(neg_sample)
+    train_y.extend([-1 for _ in range(len(neg_sample))])
+
+    return np.array(train_x), np.array(train_y)
+
+
+def over_sampling_smote(train_x, train_y):
+    pos_indices = find_all_indices(train_y, 1)
+    neg_indices = find_all_indices(train_y, -1)
+    zero_indices = find_all_indices(train_y, 0)
+    pos_sample = np.array(train_x)[pos_indices]
+    neg_sample = np.array(train_x)[neg_indices]
+    pos_size = len(pos_sample)
+    neg_size = len(neg_sample)
+    zero_size = len(train_x) - pos_size - neg_size
+    power = zero_size / (pos_size + neg_size)
+
+    pos_sample = _over_sampling_smote(pos_sample, power)
+    neg_sample = _over_sampling_smote(neg_sample, power)
+
+    train_x = list(np.array(train_x)[zero_indices])
+    train_y = [0 for _ in range(zero_size)]
+    train_x.extend(pos_sample)
+    train_y.extend([1 for _ in range(len(pos_sample))])
+    train_x.extend(neg_sample)
+    train_y.extend([-1 for _ in range(len(neg_sample))])
+
+    return np.array(train_x), np.array(train_y)
+
+
+def _over_sampling_smote(sample, power):
+    kdtree = KDTree(sample)
+    indices = [i for i in range(len(sample))]
+    np.random.shuffle(indices)
+    new_sample_list = []
+    count = int(power * len(sample)) - len(sample)
+    each = int(power)
+    feature_num = len(sample[0])
+
+    for ori_ind in indices:
+        _, near_ind = kdtree.query([sample[ori_ind]], each)
+        for i in near_ind[0]:
+            coef = np.random.rand()
+            new_sample = [coef * sample[i][j] + (1 - coef) * sample[ori_ind][j] for j in range(feature_num)]
+            new_sample_list.append(new_sample)
+            count -= 1
+        if count < 0:
+            break
+
+    sample = list(sample)
+    sample.extend(new_sample_list)
+    return sample
+
+
+def _over_sampling_naive(sample, power):
+    indices = [i for i in range(len(sample))]
+    np.random.shuffle(indices)
+    new_sample_list = []
+    count = int(power * len(sample)) - len(sample)
+    each = int(power)
+
+    for ind in indices:
+        for i in range(each):
+            new_sample_list.append(sample[ind])
+        count -= each
+        if count < 0:
+            break
+
+    sample = list(sample)
+    sample.extend(new_sample_list)
+    return sample
+
+
+def find_all_indices(data_list, value):
+    indices = []
+    for i in range(len(data_list)):
+        if data_list[i] == value:
+            indices.append(i)
+    return indices

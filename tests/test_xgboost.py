@@ -18,8 +18,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
-conf = Config()
-conf = LSTM_Config()
+conf = LM_Config()
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
@@ -38,18 +37,21 @@ test_x, test_y = data_transform_for_xgboost(test)
 train_y = sign(train_y)
 test_y = sign(test_y)
 
+train_x, train_y = over_sampling_naive(train_x, train_y)
+
 dtrain = xgb.DMatrix(train_x, train_y)
 dtest = xgb.DMatrix(test_x, test_y)
 
 param = {
     'booster': 'gbtree',
-    'silent': 1,
+    'silent': True,
     'eta': 0.01,
     'max_depth': 4,
     'gamma': 0.1,
     'objective': 'multi:softmax',
     'num_class': 3,
     'seed': 1000,
+    'scale_pos_weight': 1
 }
 
 model = xgb.XGBClassifier(**param, dtrain=dtrain)

@@ -22,7 +22,7 @@ train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_for_xgboost(train)
 test_x, test_y = data_transform_for_xgboost(test)
 
-classify = False
+classify = True
 if classify:
     train_y = sign(train_y)
     test_y = sign(test_y)
