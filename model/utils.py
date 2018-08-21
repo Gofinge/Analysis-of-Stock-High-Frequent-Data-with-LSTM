@@ -2,6 +2,7 @@ import numpy as np
 from keras import backend as K
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
+import csv
 
 def data_transform_lstm(raw_data, time_step):
     data = np.array(raw_data)
@@ -116,6 +117,8 @@ def sign(vector):
     return sign_vector
 
 
-def save_feature_importance(feature_list, acc):
-    with open('feature_importance.txt') as f:
-        f.write
+def save_feature_selection(feature_list, acc):
+    csv_file = open('feature_selection.csv', 'w', newline='')
+    writer = csv.writer(csv_file)
+    writer.writerow([acc] + feature_list)
+    return

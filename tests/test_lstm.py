@@ -60,29 +60,35 @@ acc_test_list = evaluator.evaluate_divided_trend(test_y, test_pred)
 print('acc_train_list = ' + str(acc_train_list))
 print('acc_test_list = ' + str(acc_test_list))
 
+# method 3
+acc = evaluator.evaluate_trend_simple(train_y, train_pred)
+print(acc)
+acc = evaluator.evaluate_trend_simple(test_y, test_pred)
+print(acc)
+
 # step 7: Plot
 train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
-plt.figure(figsize=(200, 15))
-plt.plot(train_y)
-plt.plot(train_pred)
-plt.plot(train_mid_price-8.3)
-plt.legend(['train_label', 'train_predict', 'train_mid_price - 8.3'], loc='upper right')
-plt.title('train_set plot')
-plt.xlabel('time')
-plt.ylabel('price')
-plt.show()
-
-plt.figure(figsize=(200, 15))
-plt.plot(test_y)
-plt.plot(test_pred)
-plt.plot(np.arange(len(test_mid_price)), test_mid_price-8.3)
-plt.legend(['test_label', 'test_predict', 'test_mid_price - 8.3'], loc='upper right')
-plt.title('test_set plot')
-plt.xlabel('time')
-plt.ylabel('price')
-plt.show()
+# plt.figure(figsize=(200, 15))
+# plt.plot(train_y)
+# plt.plot(train_pred)
+# plt.plot(train_mid_price-8.3)
+# plt.legend(['train_label', 'train_predict', 'train_mid_price - 8.3'], loc='upper right')
+# plt.title('train_set plot')
+# plt.xlabel('time')
+# plt.ylabel('price')
+# plt.show()
+#
+# plt.figure(figsize=(200, 15))
+# plt.plot(test_y)
+# plt.plot(test_pred)
+# plt.plot(np.arange(len(test_mid_price)), test_mid_price-8.3)
+# plt.legend(['test_label', 'test_predict', 'test_mid_price - 8.3'], loc='upper right')
+# plt.title('test_set plot')
+# plt.xlabel('time')
+# plt.ylabel('price')
+# plt.show()
 
 feature_list = lstm_conf['feature_name']
-save_feature_importance(feature_list, acc)
+save_feature_selection(feature_list, acc)
