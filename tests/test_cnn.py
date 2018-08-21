@@ -13,6 +13,7 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 cnn_conf = CNN_Config()
+cnn_conf.update(use_previous_model=False)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(cnn_conf['data_file_path'], encoding='gbk')
@@ -26,11 +27,11 @@ data = data[feature_and_label_name].values
 data = feature_normalize(data)
 train_size = int(len(data) * cnn_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
-train_x, train_y = data_transform_lstm(train, cnn_conf['time_step'])
-test_x, test_y = data_transform_lstm(test, cnn_conf['time_step'])
+train_x, train_y = data_transform_cnn(train, cnn_conf['time_step'])
+test_x, test_y = data_transform_cnn(test, cnn_conf['time_step'])
 
 # step 4: Create and train model
-network = LSTMs(cnn_conf)
+network = CNN(cnn_conf)
 if cnn_conf['use_previous_model']:
     network.load(cnn_conf['file_name'])
 else:

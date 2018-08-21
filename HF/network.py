@@ -67,7 +67,7 @@ class CNN(Network):
 
         input_shape = (self._time_step, int(self._feature_num / 2), 2)
 
-        model.add(Conv2D(input_shape=input_shape, filters=4, kernel_size=2))
+        model.add(Conv2D(input_shape=input_shape, filters=10, kernel_size=(3, 3)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
 
@@ -79,6 +79,6 @@ class CNN(Network):
         model.add(Dense(units=1))
 
         opt = 'adam'
-        model.compile(optimizer=opt, loss='mse', metrics=['acc'])
+        model.compile(optimizer=opt, loss=drop_zero, metrics=['acc'])
 
         return model

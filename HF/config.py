@@ -1,3 +1,9 @@
+import os
+
+
+eps = 0.005
+
+
 class Config(dict):
     def __init__(self):
         # name of features
@@ -21,14 +27,15 @@ class Config(dict):
         # epoch
         self['epoch'] = 100
 
+        path = os.getcwd()[:-5]
         # data file path
-        self['data_file_path'] = 'data/SH600031_18.6.15-18.6.20.csv'
+        self['data_file_path'] = path + '/data/SH600031_18.6.15-18.6.20.csv'
 
         # use previous model
         self['use_previous_model'] = False
 
         # model file path
-        self['model_file_path'] = 'model/'
+        self['model_file_path'] = path + '/model/'
 
         # file name
         self['file_name'] = 'test.h5'
