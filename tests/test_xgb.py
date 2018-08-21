@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import warnings
 import os
 import pandas as pd
+import xgboost as xgb
 from HF.classifier import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
