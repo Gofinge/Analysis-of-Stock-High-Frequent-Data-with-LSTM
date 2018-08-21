@@ -1,10 +1,10 @@
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.ensemble import GradientBoostingClassifier
-from HF.config import *
+from model.config import *
 import pandas as pd
-from HF.utils import *
+from model.utils import *
 import matplotlib.pyplot as plt
-from HF.evaluator import *
+from model.evaluator import *
 
 conf = LM_Config()
 
