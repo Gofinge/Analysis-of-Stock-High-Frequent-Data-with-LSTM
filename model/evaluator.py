@@ -10,7 +10,7 @@ class Evaluator:
         correct = 0
         all = 0
         for i in range(size):
-            if y_true[i] * y_pred[i] >= 0 and y_true[i] != 0:
+            if y_true[i] * y_pred[i] > 0 and y_true[i] != 0:
                 correct += 1
                 all += 1
             elif y_true[i] != 0:
