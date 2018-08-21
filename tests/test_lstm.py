@@ -84,4 +84,5 @@ plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
 
-
+feature_list = lstm_conf['feature_name']
+save_feature_importance(feature_list, acc)

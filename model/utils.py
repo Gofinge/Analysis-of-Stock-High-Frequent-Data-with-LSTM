@@ -114,3 +114,8 @@ def sign(vector):
         if value < 0:
             sign_vector.append(-1)
     return sign_vector
+
+
+def save_feature_importance(feature_list, acc):
+    with open('feature_importance.txt') as f:
+        f.write
