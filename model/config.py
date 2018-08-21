@@ -30,14 +30,17 @@ class Config(dict):
         # data file path
         self['data_file_path'] = path + '/data/SH600031_18.6.15-18.6.20.csv'
 
-        # use previous model
+        # use previous model_weight
         self['use_previous_model'] = False
 
-        # model file path
-        self['model_file_path'] = path + '/model/'
+        # model_weight file path
+        self['model_file_path'] = path + 'model_weight/'
 
-        # file name
-        self['file_name'] = 'test.h5'
+        # save file name
+        self['save_file_name'] = 'test.h5'
+
+        # load file name
+        self['load_file_name'] = 'test.h5'
 
     def update(self, **kwargs):
         for key in kwargs:
@@ -68,8 +71,11 @@ class LSTM_Config(Config):
         # epoch
         self['epoch'] = 100
 
-        # file name
-        self['file_name'] = 'lstm_test.h5'
+        # save file name
+        self['save_file_name'] = 'lstm_test.h5'
+
+        # load file name
+        self['save_file_name'] = 'lstm_test.h5'
 
 
 class CNN_Config(Config):
@@ -93,6 +99,12 @@ class CNN_Config(Config):
 
         # epoch
         self['epoch'] = 100
+
+        # save file name
+        self['save_file_name'] = 'cnn_test.h5'
+
+        # load file name
+        self['load_file_name'] = 'cnn_test.h5'
 
         # file name
         self['file_name'] = 'cnn_test.h5'

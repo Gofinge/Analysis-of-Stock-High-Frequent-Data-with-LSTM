@@ -1,6 +1,10 @@
 from HF.config import *
 from HF.utils import *
 from HF.evaluator import Evaluator
+from model.config import *
+from model.network import *
+from model.utils import *
+from model.evaluator import Evaluator
 from keras import backend as K
 import matplotlib.pyplot as plt
 import warnings
@@ -8,12 +12,14 @@ import pandas as pd
 import xgboost as xgb
 from HF.classifier import *
 from sklearn import preprocessing
+from model.classifier import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
 conf = Config()
+conf = LSTM_Config()
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
@@ -60,7 +66,7 @@ param = {
 }
 model_old = xgb.train(param, dtrain, num_boost_round=100)
 
-# step 4: Create and train model
+# step 4: Create and train model_weight
 
 xlf = XGB()
 if conf['use_previous_model']:
