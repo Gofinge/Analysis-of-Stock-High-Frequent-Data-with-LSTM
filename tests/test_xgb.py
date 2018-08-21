@@ -17,7 +17,8 @@ K.clear_session()
 conf = lstm_config()
 
 # step 1: Get dataset (csv)
-data = pd.read_csv('SH600031_18.6.15-18.6.20.csv', encoding='gbk')
+file_path = os.getcwd()[:-5] + conf['data_file_path']
+data = pd.read_csv(file_path, encoding='gbk')
 
 # step 2: Select Feature
 feature_and_label_name = conf['feature_name']
@@ -28,10 +29,11 @@ data = data[feature_and_label_name].values
 data = feature_normalize(data)
 train_size = int(len(data) * conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
-train_x, train_y = data_transform_lstm(train, conf['time_step'])
-test_x, test_y = data_transform_lstm(test, conf['time_step'])
+train_x, train_y = data_transform_for_xgboost(train)
+test_x, test_y = data_transform_for_xgboost(test)
 
 # step 4: Create and train model
+
 xlf = XGB()
 if conf['use_previous_model']:
     xlf.load(conf['file_name'])
@@ -66,4 +68,3 @@ plt.figure(figsize=(200, 15))
 plt.plot(test_y)
 plt.plot(test_pred)
 plt.show()
-
