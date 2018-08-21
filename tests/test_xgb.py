@@ -14,7 +14,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
-conf = Config()
+conf = lstm_config()
 
 # step 1: Get dataset (csv)
 data = pd.read_csv('SH600031_18.6.15-18.6.20.csv', encoding='gbk')

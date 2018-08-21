@@ -12,32 +12,30 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
-conf = Config()
-conf.update(feature_name=['buy1', 'bc1',  'sale1', 'sc1'],
-            use_previous_model=True)
+lstm_conf = LSTM_Config()
 
 # step 1: Get dataset (csv)
-data = pd.read_csv(conf['data_file_path'], encoding='gbk')
+data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = conf['feature_name']
-feature_and_label_name.extend(conf['label_name'])
+feature_and_label_name = lstm_conf['feature_name']
+feature_and_label_name.extend(lstm_conf['label_name'])
 data = data[feature_and_label_name].values
 
 # step 3: Preprocess
 data = feature_normalize(data)
-train_size = int(len(data) * conf['training_set_proportion'])
+train_size = int(len(data) * lstm_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
-train_x, train_y = data_transform_lstm(train, conf['time_step'])
-test_x, test_y = data_transform_lstm(test, conf['time_step'])
+train_x, train_y = data_transform_lstm(train, lstm_conf['time_step'])
+test_x, test_y = data_transform_lstm(test, lstm_conf['time_step'])
 
 # step 4: Create and train model
-network = LSTMs(conf)
-if conf['use_previous_model']:
-    network.load(conf['file_name'])
+network = LSTMs(lstm_conf)
+if lstm_conf['use_previous_model']:
+    network.load(lstm_conf['file_name'])
 else:
     network.train(train_x, train_y)
-    network.save(conf['file_name'])
+    network.save(lstm_conf['file_name'])
 
 # step 5: Predict
 train_pred = network.predict(train_x)

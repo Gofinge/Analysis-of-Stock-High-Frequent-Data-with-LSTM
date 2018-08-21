@@ -12,9 +12,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
-cnn_conf = Config()
-cnn_conf.update(feature_name=['buy5', 'bc5', 'buy4', 'bc4', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
-                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4', 'sale5', 'sc5'])
+cnn_conf = CNN_Config()
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(cnn_conf['data_file_path'], encoding='gbk')
