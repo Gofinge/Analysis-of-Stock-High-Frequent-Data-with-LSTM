@@ -37,7 +37,7 @@ class Config(dict):
         self['model_file_path'] = 'model/'
 
         # file name
-        self['file_name'] = 'test.h5'
+        self['file_name'] = 'lstm.h5'
 
     def update(self, **kwargs):
         for key in kwargs:

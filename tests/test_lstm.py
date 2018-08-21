@@ -13,6 +13,8 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 conf = Config()
+conf.update(feature_name=['buy1', 'bc1',  'sale1', 'sc1'],
+            use_previous_model=True)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
