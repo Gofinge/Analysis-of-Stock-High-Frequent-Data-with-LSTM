@@ -43,6 +43,9 @@ class Evaluator:
                         pass  # 预测价格变化趋势和实际价格变化趋势相反
 
         correct = correct_stay + correct_rise_or_decline
+        if stay == 0:
+            correct_stay = 0
+            stay = 1
         return round(correct / size, self._acc), \
                round(correct_stay / stay, self._acc), \
                round(correct_rise_or_decline / (size - stay), self._acc)
@@ -57,10 +60,13 @@ class Evaluator:
                     correct += 1
             else:
                 j = i
-                while abs(y_true[j]) < eps:
-                    j += 1
-                if y_pred[i] * y_true[j] > 0:
-                    correct += 1
+                try:
+                    while abs(y_true[j]) < eps:
+                        j += 1
+                    if y_pred[i] * y_true[j] > 0:
+                        correct += 1
+                except:
+                    pass
 
         return round(correct / size, self._acc)
 
