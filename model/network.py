@@ -79,18 +79,30 @@ class LSTMs(Network):
 
     def _init_model(self):
         model = Sequential()
-        x = Input(self._shape)
         for i in range(self._LSTM_layer_num):
             neuron_num = self._LSTM_neuron_num[i]
             if i == 0:
                 lstm = LSTM(units=neuron_num, input_shape=self._shape, return_sequences=True)
             else:
                 lstm = LSTM(units=neuron_num, return_sequences=True)
-            x = lstm(x)
-        x = Flatten()(x)
-        model.add(Dense(2, activation='tanh'))
-        model.compile(loss='mse', optimizer='RMSProp')
+            model.add(lstm)
+        model.add(Flatten())
+        model.add(Dense(1, activation='tanh'))
+        model.compile(loss=drop_zero, optimizer='RMSProp')
         return model
+
+    def strong_train(self, train_x, train_y, epochs=5):
+        temp_train_x = train_x
+        temp_train_y = train_y
+        # temp_batch_size = self._batch_size
+        # temp_epochs = self._epoch
+        while len(temp_train_x) > 1000:
+            self._model.fit(temp_train_x, temp_train_y, batch_size=self._batch_size, epochs=epochs, verbose=1)
+            temp_lenth = int(len(temp_train_x) / 2)
+            temp_train_x = temp_train_x[temp_lenth: -1]
+            temp_train_y = temp_train_y[temp_lenth: -1]
+            # temp_batch_size = int(temp_batch_size * 2/3)
+            # temp_epoch = int(temp_epoch * 1.1)
 
 
 class CNN(Network):
