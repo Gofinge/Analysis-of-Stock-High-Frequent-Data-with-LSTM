@@ -272,6 +272,18 @@ def show_feature_importance(clf, feature_list):
         print(feature_list[i], ': ', fi_list[i])
 
 
+def extract_feature_and_label(data, feature_name_list, label_name_list):
+    feature_and_label_name = list(np.copy(feature_name_list))
+    feature_and_label_name.extend(label_name_list)
+    return data[feature_and_label_name].values
+
+
+def divide_train_and_test(data, ratio):
+    train_size = int(len(data) * ratio)
+    train, test = data[0:train_size, :], data[train_size:len(data), :]
+    return train, test
+
+
 def plot_scatter(y_true, y_pred, sample_size=50):
     sample_size = 50
     x_list = []

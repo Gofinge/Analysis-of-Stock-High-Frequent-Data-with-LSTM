@@ -24,32 +24,26 @@ conf = LM_Config()
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = list(np.copy(conf['feature_name']))
-feature_and_label_name.extend(conf['label_name'])
-data = data[feature_and_label_name].values
+data = extract_feature_and_label(data, feature_name_list=conf['feature_name'], label_name_list=conf['label_name'])
 
 # step 3: Preprocess
-data = feature_normalize(data)
-train_size = int(len(data) * conf['training_set_proportion'])
-train, test = data[0:train_size, :], data[train_size:len(data), :]
+train, test = divide_train_and_test(data, conf['training_set_proportion'])
 train_x, train_y = data_transform_for_xgboost(train)
 test_x, test_y = data_transform_for_xgboost(test)
 train_y = sign(train_y)
 test_y = sign(test_y)
-
 indices = find_all_indices(train_y, 1)
 indices.extend(find_all_indices(train_y, -1))
 train_x = np.array(train_x)[indices]
 train_y = np.array(train_y)[indices]
 
 dtrain = xgb.DMatrix(train_x, train_y)
-dtest = xgb.DMatrix(test_x, test_y)
 
 param = {
     'booster': 'gbtree',
     'silent': True,
     'eta': 0.01,
-    'max_depth': 3,
+    'max_depth': 4,
     'gamma': 0.1,
     'objective': 'multi:softmax',
     'num_class': 3,

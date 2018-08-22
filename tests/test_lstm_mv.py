@@ -20,15 +20,11 @@ lstm_conf.update(label_name=['30s_mean_price', '30s_price', '30s_mean_price_delt
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = list(np.copy(lstm_conf['feature_name']))
-feature_and_label_name.extend(lstm_conf['label_name'])
-
-data = data[feature_and_label_name].values
+data = extract_feature_and_label(data, lstm_conf['feature_name'], lstm_conf['label_name'])
 
 # step 3: Preprocess
 data = feature_normalize(data, 4)
-train_size = int(len(data) * lstm_conf['training_set_proportion'])
-train, test = data[0:train_size, :], data[train_size:len(data), :]
+train, test = divide_train_and_test(data, lstm_conf['training_set_proportion'])
 train_x, train_y, train_price, train_mean_price = data_transform_lstm_mv(train, lstm_conf['time_step'])
 test_x, test_y, test_price, test_mean_price = data_transform_lstm_mv(test, lstm_conf['time_step'])
 
