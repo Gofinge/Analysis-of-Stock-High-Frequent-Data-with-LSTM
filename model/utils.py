@@ -27,7 +27,7 @@ def data_transform_cnn(raw_data, time_step):
         temp = data[i:time_step + i, 0:data.shape[1] - 1]
         temp = np.reshape(temp, (time_step, int((data.shape[1] - 1) / 2), 2))
         x.append(temp)
-        y.append(data[time_step + i - 1, -1])
+        y.append(np.sign(data[time_step + i - 1, -1]))
     return np.array(x), np.array(y)
 
 
@@ -96,6 +96,22 @@ def one_hot_encode(y, category_num):
             print('Error: index = ' + str(ind) + ' value = ' + str(value))
         encode.append(vector)
     return encode
+
+
+def one_hot_decode(y):
+    decode = []
+    for vector in y:
+        ind = vector.index(1)
+        decode.append(ind)
+    return decode
+
+
+def batch_labelize_prob_vector(y):
+    labelized = []
+    for vector in y:
+        vector = labelize_prob_vector(vector)
+        labelized.append(vector)
+    return labelized
 
 
 def labelize_prob_vector(vector):
@@ -248,6 +264,11 @@ def plot_scatter(y_true, y_pred, sample_size=50):
             x_list.append(i)
             pred_list.append(y_pred[i])
             true_list.append(y_true[i])
-    plt.scatter(x_list, true_list)
-    plt.scatter(x_list, pred_list, marker='x')
+    try:
+        plt.scatter(x_list, true_list)
+        plt.scatter(x_list, pred_list, marker='x')
+    except:
+        print(x_list)
+        print(true_list)
+        print(pred_list)
     plt.show()

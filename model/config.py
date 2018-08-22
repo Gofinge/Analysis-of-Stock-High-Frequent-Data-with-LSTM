@@ -10,13 +10,13 @@ class Config(dict):
         self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1']
 
         # name of labels
-        self['label_name'] = ['mid_price_delta']
+        self['label_name'] = ['30s_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
 
         # proportion of training set: training / (training + testing)
-        self['training_set_proportion'] = 0.3
+        self['training_set_proportion'] = 0.7
 
         # time step (each step takes 3 sec)
         self['time_step'] = 5
@@ -123,15 +123,18 @@ class LM_Config(Config):
                                 'VW_Avg_price_minus_current_price', 'vol', 'amount', 'cjbs', 'yclose', 'syl1', 'syl2',
                                 'buy1', 'buy2', 'buy3', 'buy4', 'buy5', 'sale1', 'sale2', 'sale3', 'sale4', 'sale5',
                                 'bc1', 'bc2', 'bc3', 'bc4', 'bc5', 'sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'wb', 'lb', 'zmm',
-                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1']
+                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1',
+                                'bc2_minus_sc2', 'bc3_minus_sc3',
+                                'MACD_DIF', 'MACD_DEA', 'MACD_hist', 'RSI_3', 'RSI_6', 'RSI_12', 'BOLL_upper',
+                                'BOLL_middle', 'BOLL_lower']
 
-        # self['feature_name'] = ['bc1', 'sc1']
+        # self['feature_name'] = ['bc1', 'sc1', 'buy1', 'sale1']
 
         # name of labels
-        self['label_name'] = ['mid_price_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
 
         # file name
-        self['file_name'] = 'lasso_test.h5'
+        self['file_name'] = 'lm_test.h5'

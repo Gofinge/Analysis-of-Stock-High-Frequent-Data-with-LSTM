@@ -27,9 +27,9 @@ if classify:
     train_y = sign(train_y)
     test_y = sign(test_y)
 
-    clf = RandomForestClassifier(n_estimators=100, max_depth=3)
+    clf = RandomForestClassifier(n_estimators=100, max_depth=4)
 else:
-    clf = RandomForestRegressor(n_estimators=100, max_depth=3)
+    clf = RandomForestRegressor(n_estimators=100, max_depth=4)
 
 clf = clf.fit(train_x, train_y)
 
