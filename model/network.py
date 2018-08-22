@@ -61,6 +61,7 @@ class LSTM_MV(Network):
         variance = BatchNormalization()(variance)
         variance = Activation('relu')(variance)
         variance = Dense(units=1, name='variance')(variance)
+        variance = Activation('relu')(variance)
 
         model = Model(inputs=init, outputs=[mean, variance])
         losses = ['mse', 'mse']
