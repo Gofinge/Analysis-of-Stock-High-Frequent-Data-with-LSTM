@@ -19,13 +19,10 @@ cnn_conf.update(use_previous_model=False)
 data = pd.read_csv(cnn_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = list(np.copy(cnn_conf['feature_name']))
-feature_and_label_name.extend(cnn_conf['label_name'])
-data = data[feature_and_label_name].values
+data = extract_feature_and_label(data, cnn_conf['feature_name'], cnn_conf['label_name'])
 
 # step 3: Preprocess
-train_size = int(len(data) * cnn_conf['training_set_proportion'])
-train, test = data[0:train_size, :], data[train_size:len(data), :]
+train, test = divide_train_and_test(data, cnn_conf['training_set_proportion'])
 train_x, train_y = data_transform_cnn(train, cnn_conf['time_step'])
 test_x, test_y = data_transform_cnn(test, cnn_conf['time_step'])
 
@@ -67,9 +64,9 @@ print(total_acc, stay_acc, rise_dec_acc)
 
 # method 2
 print('evaluate trend without stay')
-acc = evaluator.evaluate_trend_without_stay(y_true=train_y, y_pred=train_pred)
+acc = evaluator.evaluate_trend_with_delay(y_true=train_y, y_pred=train_pred)
 print(acc)
-acc = evaluator.evaluate_trend_without_stay(y_true=test_y, y_pred=test_pred)
+acc = evaluator.evaluate_trend_with_delay(y_true=test_y, y_pred=test_pred)
 print(acc)
 
 # method 3

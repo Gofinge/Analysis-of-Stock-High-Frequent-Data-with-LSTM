@@ -47,11 +47,9 @@ for i in range(len(test_pred[0])):
 
 # step 6: Evaluate
 evaluator = Evaluator()
-print('evaluate')
-acc = evaluator.evaluate_mean_and_variance(train_price, train_pred)
-print(acc)
-acc = evaluator.evaluate_mean_and_variance(test_price, test_pred)
-print(acc)
+train_acc = evaluator.evaluate_mean_and_variance(train_price, train_pred)
+print('train=', train_acc)
+test_acc = evaluator.evaluate_mean_and_variance(test_price, test_pred)
+print('test=', test_acc)
 
 plot_confidence_interval(test_mean_price, test_price, test_pred[0], test_pred[1], 3000)
-#plot_confidence_interval(test_price, test_pred[0], test_pred[1], 3000)

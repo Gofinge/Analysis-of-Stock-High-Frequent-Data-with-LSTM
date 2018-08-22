@@ -70,7 +70,7 @@ class Evaluator:
 
         return round(correct / size, self._acc)
 
-    def evaluate_trend_without_stay(self, y_true, y_pred):
+    def evaluate_trend_with_delay(self, y_true, y_pred):
         size = len(y_true)
         correct = 0
         for i in range(size):
