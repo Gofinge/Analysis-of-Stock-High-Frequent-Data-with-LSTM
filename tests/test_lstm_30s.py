@@ -14,7 +14,10 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
-                 load_file_name='lstm.h5')
+                 label_name=['30s_mid_price_delta'],
+                 feature_name=['buy4', 'bc4', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
+                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4'],
+                 training_set_proportion=0.67)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
@@ -34,8 +37,12 @@ test_x, test_y = data_transform_lstm(test, lstm_conf['time_step'])
 
 # step 4: Create and train model_weight
 network = LSTMs(lstm_conf)
-if lstm_conf['use_previous_model']:
+if lstm_conf['use_previous_model'] == 1:
     network.load(lstm_conf['load_file_name'])
+elif lstm_conf['use_previous_model'] == 2:
+    network.load(lstm_conf['save_file_name'])
+    network.strong_train(train_x, train_y)
+    network.save('strongtrain_test.h5')
 else:
     network.train(train_x, train_y)
     network.save(lstm_conf['save_file_name'])
@@ -64,6 +71,8 @@ print('acc_test_list = ' + str(acc_test_list))
 train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
+
+'''
 plt.figure(figsize=(200, 15))
 plt.plot(train_y)
 plt.plot(train_pred)
@@ -83,5 +92,7 @@ plt.title('test_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
+'''
+
 
 

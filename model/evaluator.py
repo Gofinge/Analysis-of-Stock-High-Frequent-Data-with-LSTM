@@ -75,7 +75,7 @@ class Evaluator:
                 pass
         return correct / size
 
-    def evaluate_divided_trend(self, y_true, y_pred, part_num=10):
+    def evaluate_divided_trend(self, y_true, y_pred, part_num=5):
         size = len(y_true)
         part_size = size // part_num
         acc_list = []

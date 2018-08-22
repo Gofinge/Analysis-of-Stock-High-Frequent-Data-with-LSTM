@@ -1,6 +1,5 @@
 import os
 
-
 eps = 0.005
 
 
@@ -27,24 +26,26 @@ class Config(dict):
         # epoch
         self['epoch'] = 100
 
-        path = os.getcwd()[:-5]
+        self.path = os.getcwd()[:-5]
         # data file path
-        self['data_file_path'] = path + '/data/SH600031_18.6.15-18.6.20.csv'
+        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20.csv'
 
         # use previous model_weight
         self['use_previous_model'] = False
 
         # model_weight file path
-        self['model_file_path'] = path + 'model_weight/'
+        self['model_file_path'] = self.path + 'model_weight/'
 
         # save file name
-        self['save_file_name'] = 'test.h5'
+        self['save_file_name'] = 'test' + '.h5'
 
         # load file name
-        self['load_file_name'] = 'test.h5'
+        self['load_file_name'] = 'test' + '.h5'
 
     def update(self, **kwargs):
         for key in kwargs:
+            if key == 'feature_name':
+                self['feature_num'] = len(kwargs[key])
             self[key] = kwargs[key]
 
 
@@ -52,7 +53,7 @@ class LSTM_Config(Config):
     def __init__(self):
         Config.__init__(self)
         # name of features
-        self['feature_name'] = ['buy1', 'bc1',  'sale1', 'sc1']
+        self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1']
 
         # name of labels
         self['label_name'] = ['mid_price_delta']
@@ -73,10 +74,10 @@ class LSTM_Config(Config):
         self['epoch'] = 100
 
         # save file name
-        self['save_file_name'] = 'lstm_test.h5'
+        self['save_file_name'] = 'lstm_test' + '.h5'
 
         # load file name
-        self['save_file_name'] = 'lstm_test.h5'
+        self['load_file_name'] = 'lstm_test' + '.h5'
 
 
 class CNN_Config(Config):
@@ -84,7 +85,7 @@ class CNN_Config(Config):
         Config.__init__(self)
         # name of features
         self['feature_name'] = ['buy5', 'bc5', 'buy4', 'bc4', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
-                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4', 'sale5', 'sc5']
+                                'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4', 'sale5', 'sc5']
 
         # name of labels
         self['label_name'] = ['mid_price_delta']
@@ -102,7 +103,7 @@ class CNN_Config(Config):
         self['epoch'] = 100
 
         # save file name
-        self['save_file_name'] = 'cnn_test.h5'
+        self['save_file_name'] = 'cnn_test' + '.h5'
 
         # load file name
-        self['load_file_name'] = 'cnn_test.h5'
+        self['load_file_name'] = 'cnn_test' + '.h5'

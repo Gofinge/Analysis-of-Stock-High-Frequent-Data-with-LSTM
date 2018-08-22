@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers.core import Dense, Flatten, Activation
+from keras.layers.core import Dense, Flatten, Activation, Dropout
 from keras.layers import LSTM, Conv2D, BatchNormalization
 from model.utils import *
 
@@ -54,6 +54,19 @@ class LSTMs(Network):
         model.add(Dense(1, activation='tanh'))
         model.compile(loss=drop_zero, optimizer='RMSProp')
         return model
+
+    def strong_train(self, train_x, train_y, epochs=5):
+        temp_train_x = train_x
+        temp_train_y = train_y
+        # temp_batch_size = self._batch_size
+        # temp_epochs = self._epoch
+        while len(temp_train_x) > 1000:
+            self._model.fit(temp_train_x, temp_train_y, batch_size=self._batch_size, epochs=epochs, verbose=1)
+            temp_lenth = int(len(temp_train_x) / 2)
+            temp_train_x = temp_train_x[temp_lenth: -1]
+            temp_train_y = temp_train_y[temp_lenth: -1]
+            # temp_batch_size = int(temp_batch_size * 2/3)
+            # temp_epoch = int(temp_epoch * 1.1)
 
 
 class CNN(Network):
