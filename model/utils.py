@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 import csv
 from sklearn.neighbors import KDTree
+import matplotlib.pyplot as plt
 
 
 def data_transform_lstm(raw_data, time_step):
@@ -223,3 +224,30 @@ def find_all_indices(data_list, value):
         if data_list[i] == value:
             indices.append(i)
     return indices
+
+
+def show_feature_importance(clf, feature_list):
+    fi_list = clf.feature_importances_
+    ind = np.argsort(fi_list)
+    feature_list = list(np.array(feature_list)[ind])
+    fi_list = list(fi_list[ind])
+    feature_list.reverse()
+    fi_list.reverse()
+
+    for i in range(len(ind)):
+        print(feature_list[i], ': ', fi_list[i])
+
+
+def plot_scatter(y_true, y_pred, sample_size=50):
+    sample_size = 50
+    x_list = []
+    pred_list = []
+    true_list = []
+    for i in range(sample_size):
+        if y_true[i] != 0:
+            x_list.append(i)
+            pred_list.append(y_pred[i])
+            true_list.append(y_true[i])
+    plt.scatter(x_list, true_list)
+    plt.scatter(x_list, pred_list, marker='x')
+    plt.show()

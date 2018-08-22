@@ -49,9 +49,9 @@ evaluator = Evaluator()
 print('simple evaluation')
 
 # method1
-acc = evaluator.evaluate_trend_simple(y_true=train_y, y_pred=train_pred)
+acc = evaluator.evaluate_trend(y_true=train_y, y_pred=train_pred)
 print(acc)
-acc = evaluator.evaluate_trend_simple(y_true=test_y, y_pred=test_pred)
+acc = evaluator.evaluate_trend(y_true=test_y, y_pred=test_pred)
 print(acc)
 
 # method 2

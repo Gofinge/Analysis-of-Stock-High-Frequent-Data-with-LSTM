@@ -12,7 +12,7 @@ conf = LM_Config()
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = conf['feature_name']
+feature_and_label_name = list(np.copy(conf['feature_name']))
 feature_and_label_name.extend(conf['label_name'])
 data = data[feature_and_label_name].values
 
@@ -22,37 +22,26 @@ train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_for_xgboost(train)
 test_x, test_y = data_transform_for_xgboost(test)
 
-classify = True
+classify = False
 if classify:
     train_y = sign(train_y)
     test_y = sign(test_y)
-    clf = tree.DecisionTreeClassifier(max_depth=5)
+    clf = tree.DecisionTreeClassifier(max_depth=3)
 else:
-    clf = tree.DecisionTreeRegressor(max_depth=5)
-
+    clf = tree.DecisionTreeRegressor(max_depth=3)
 
 clf = clf.fit(train_x, train_y)
 
 clf.fit(train_x, train_y)
-pred = clf.predict(test_x)
-
-sample_size = 50
-x_list = []
-pred_list = []
-true_list = []
-for i in range(sample_size):
-    if test_y[i] != 0:
-        x_list.append(i)
-        pred_list.append(pred[i])
-        true_list.append(test_y[i])
-plt.scatter(x_list, true_list)
-plt.scatter(x_list, pred_list, marker='x')
-plt.show()
 
 evaluator = Evaluator()
 
 train_pred = clf.predict(train_x)
 test_pred = clf.predict(test_x)
+
+show_feature_importance(clf, conf['feature_name'])
+
+plot_scatter(y_true=test_y, y_pred=test_pred)
 
 # method 1
 print('evaluate trend')

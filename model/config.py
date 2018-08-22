@@ -120,7 +120,7 @@ class LM_Config(Config):
                                 'VW_Avg_price_minus_current_price', 'vol', 'amount', 'cjbs', 'yclose', 'syl1', 'syl2',
                                 'buy1', 'buy2', 'buy3', 'buy4', 'buy5', 'sale1', 'sale2', 'sale3', 'sale4', 'sale5',
                                 'bc1', 'bc2', 'bc3', 'bc4', 'bc5', 'sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'wb', 'lb', 'zmm',
-                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale']
+                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1']
 
         # self['feature_name'] = ['bc1', 'sc1']
 
