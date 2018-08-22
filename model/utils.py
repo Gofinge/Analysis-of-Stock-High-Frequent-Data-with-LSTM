@@ -5,6 +5,7 @@ import tensorflow as tf
 import csv
 from sklearn.neighbors import KDTree
 import matplotlib.pyplot as plt
+from model.config import *
 
 
 def data_transform_lstm(raw_data, time_step):
@@ -24,11 +25,13 @@ def data_transform_lstm_mv(raw_data, time_step):
     x = []
     y1 = []
     y2 = []
+    price = []
     for i in range(window_num):
-        x.append(data[i:time_step + i, 0:data.shape[1] - 2])
+        x.append(data[i:time_step + i, 0:data.shape[1] - 3])
         y1.append(data[time_step + i - 1, -2])
         y2.append(data[time_step + i - 1, -1])
-    return np.array(x), [np.array(y1), np.array(y2)]
+        price.append(data[time_step + i - 1, -3])
+    return np.array(x), [np.array(y1), np.array(y2)], price
 
 
 def data_transform_cnn(raw_data, time_step):
@@ -54,9 +57,9 @@ def data_transform_for_xgboost(raw_data):
     return np.array(x), np.array(y)
 
 
-def feature_normalize(data):
+def feature_normalize(data, label_num=1):
     scaler = MinMaxScaler()
-    data[:, 0:-1] = scaler.fit_transform(data[:, 0:-1])
+    data[:, 0:-label_num] = scaler.fit_transform(data[:, 0:-label_num])
     return data
 
 
@@ -284,4 +287,21 @@ def plot_scatter(y_true, y_pred, sample_size=50):
         print(x_list)
         print(true_list)
         print(pred_list)
+    plt.show()
+
+
+def plot_confidence_interval(true_price, mean_list, std_list, sample_num=300):
+    true_price = true_price[0:sample_num]
+    mean_list = mean_list[0:sample_num]
+    std_list = std_list[0:sample_num]
+    # plt.figure(figsize=(50, 15))
+    up, down = mean_list + std_list * z_95, mean_list - std_list * z_95
+
+    plt.plot(true_price)
+    plt.plot(up, color='r')
+    plt.plot(down, color='r')
+    # plt.legend(['test_label', 'test_predict', 'test_mid_price - 8.3'], loc='upper right')
+    # plt.title('test_set plot')
+    plt.xlabel('time')
+    plt.ylabel('price')
     plt.show()

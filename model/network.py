@@ -55,12 +55,12 @@ class LSTM_MV(Network):
         mean = Dense(units=3)(x)
         mean = BatchNormalization()(mean)
         mean = Activation('relu')(mean)
-        mean = Dense(units=1)(mean)
+        mean = Dense(units=1, name='mean')(mean)
 
         variance = Dense(units=3)(x)
         variance = BatchNormalization()(variance)
         variance = Activation('relu')(variance)
-        variance = Dense(units=1)(variance)
+        variance = Dense(units=1, name='variance')(variance)
 
         model = Model(inputs=init, outputs=[mean, variance])
         losses = ['mse', 'mse']

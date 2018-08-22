@@ -17,7 +17,7 @@ class Config(dict):
         self['feature_num'] = len(self['feature_name'])
 
         # proportion of training set: training / (training + testing)
-        self['training_set_proportion'] = 0.7
+        self['training_set_proportion'] = 0.5
 
         # time step (each step takes 3 sec)
         self['time_step'] = 5
