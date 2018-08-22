@@ -118,3 +118,12 @@ class Evaluator:
             part_y_pred = y_pred[i * part_size:(i + 1) * part_size]
             acc_list.append(self.evaluate_one_hot_trend(part_y_true, part_y_pred))
         return acc_list
+
+    def evaluate_mean_and_variance(self, y_true, y_pred):
+        pred_mean, pred_std = y_pred[0], y_pred[1]
+        all = len(pred_mean)
+        correct = 0
+        for i in range(all):
+            if abs(y_true - pred_mean) < pred_std * z_95:
+                correct += 1
+        return round(correct / all, self._acc)

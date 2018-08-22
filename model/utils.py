@@ -18,6 +18,19 @@ def data_transform_lstm(raw_data, time_step):
     return np.array(x), np.array(y)
 
 
+def data_transform_lstm_mv(raw_data, time_step):
+    data = np.array(raw_data)
+    window_num = data.shape[0] - time_step + 1
+    x = []
+    y1 = []
+    y2 = []
+    for i in range(window_num):
+        x.append(data[i:time_step + i, 0:data.shape[1] - 2])
+        y1.append(data[time_step + i - 1, -2])
+        y2.append(data[time_step + i - 1, -1])
+    return np.array(x), [np.array(y1), np.array(y2)]
+
+
 def data_transform_cnn(raw_data, time_step):
     data = np.array(raw_data)
     window_num = data.shape[0] - time_step + 1
