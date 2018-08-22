@@ -86,7 +86,7 @@ class CNN_Config(Config):
                                 'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4', 'sale5', 'sc5']
 
         # name of labels
-        self['label_name'] = ['next_delta']
+        self['label_name'] = ['mid_price_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
@@ -134,4 +134,4 @@ class LM_Config(Config):
         self['feature_num'] = len(self['feature_name'])
 
         # file name
-        self['file_name'] = 'lasso_test.h5'
+        self['file_name'] = 'lm_test.h5'
