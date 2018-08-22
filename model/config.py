@@ -1,5 +1,6 @@
 import os
 
+
 eps = 0.005
 
 
@@ -107,3 +108,30 @@ class CNN_Config(Config):
 
         # load file name
         self['load_file_name'] = 'cnn_test' + '.h5'
+
+        # file name
+        self['file_name'] = 'cnn_test.h5'
+
+
+class LM_Config(Config):
+    def __init__(self):
+        Config.__init__(self)
+
+        # name of features
+        self['feature_name'] = ['price', 'mid_price', 'VW_Avg_buy_price', 'VW_Avg_sale_price', 'aggressor_side',
+                                'relative_buy_vol', 'relative_sale_vol', 'VW_Avg_price',
+                                'VW_Avg_price_minus_current_price', 'vol', 'amount', 'cjbs', 'yclose', 'syl1', 'syl2',
+                                'buy1', 'buy2', 'buy3', 'buy4', 'buy5', 'sale1', 'sale2', 'sale3', 'sale4', 'sale5',
+                                'bc1', 'bc2', 'bc3', 'bc4', 'bc5', 'sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'wb', 'lb', 'zmm',
+                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1']
+
+        # self['feature_name'] = ['bc1', 'sc1']
+
+        # name of labels
+        self['label_name'] = ['mid_price_delta']
+
+        # number of features
+        self['feature_num'] = len(self['feature_name'])
+
+        # file name
+        self['file_name'] = 'lasso_test.h5'

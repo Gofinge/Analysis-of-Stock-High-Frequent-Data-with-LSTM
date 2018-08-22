@@ -3,6 +3,7 @@ from .config import *
 
 class Evaluator:
     def __init__(self):
+        self._acc = 3
         pass
 
     def evaluate_trend_simple(self, y_true, y_pred):
@@ -15,7 +16,7 @@ class Evaluator:
                 all += 1
             elif y_true[i] != 0:
                 all += 1
-        return correct / all
+        return round(correct / all, self._acc)
 
     def evaluate_trend(self, y_true, y_pred):
         size = len(y_true)
@@ -42,7 +43,12 @@ class Evaluator:
                         pass  # 预测价格变化趋势和实际价格变化趋势相反
 
         correct = correct_stay + correct_rise_or_decline
-        return correct / size, correct_stay / stay, correct_rise_or_decline / (size - stay)
+        if stay == 0:
+            correct_stay = 0
+            stay = 1
+        return round(correct / size, self._acc), \
+               round(correct_stay / stay, self._acc), \
+               round(correct_rise_or_decline / (size - stay), self._acc)
 
     def evaluate_trend_2(self, y_true, y_pred):
         size = len(y_true)
@@ -54,12 +60,15 @@ class Evaluator:
                     correct += 1
             else:
                 j = i
-                while abs(y_true[j]) < eps:
-                    j += 1
-                if y_pred[i] * y_true[j] > 0:
-                    correct += 1
+                try:
+                    while abs(y_true[j]) < eps:
+                        j += 1
+                    if y_pred[i] * y_true[j] > 0:
+                        correct += 1
+                except:
+                    pass
 
-        return correct / size
+        return round(correct / size, self._acc)
 
     def evaluate_trend_without_stay(self, y_true, y_pred):
         size = len(y_true)
@@ -73,7 +82,7 @@ class Evaluator:
                     correct += 1
             except IndexError:
                 pass
-        return correct / size
+        return round(correct / size, self._acc)
 
     def evaluate_divided_trend(self, y_true, y_pred, part_num=5):
         size = len(y_true)
@@ -98,7 +107,7 @@ class Evaluator:
             except ValueError:
                 print(v1, v2)
         print(correct, all)
-        return correct / all
+        return round(correct / all, self._acc)
 
     def evaluate_divided_one_hot_trend(self, y_true, y_pred, part_num=10):
         size = len(y_true)
