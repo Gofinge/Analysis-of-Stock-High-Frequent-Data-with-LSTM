@@ -19,16 +19,23 @@ cnn_conf.update(use_previous_model=False)
 data = pd.read_csv(cnn_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-feature_and_label_name = cnn_conf['feature_name']
+feature_and_label_name = list(np.copy(cnn_conf['feature_name']))
 feature_and_label_name.extend(cnn_conf['label_name'])
 data = data[feature_and_label_name].values
 
 # step 3: Preprocess
-data = feature_normalize(data)
 train_size = int(len(data) * cnn_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_cnn(train, cnn_conf['time_step'])
 test_x, test_y = data_transform_cnn(test, cnn_conf['time_step'])
+
+indices = find_all_indices(train_y, 1)
+indices.extend(find_all_indices(train_y, -1))
+train_x = np.array(train_x)[indices]
+train_y = np.array(train_y)[indices]
+
+train_y = one_hot_encode(train_y, 3)
+test_y = one_hot_encode(test_y, 3)
 
 # step 4: Create and train model_weight
 network = CNN(cnn_conf)
@@ -44,6 +51,12 @@ test_pred = network.predict(test_x)
 
 # step 6: Evaluate
 evaluator = Evaluator()
+
+train_y = one_hot_decode(batch_labelize_prob_vector(train_y))
+train_pred = one_hot_decode(batch_labelize_prob_vector(train_pred))
+test_y = one_hot_decode(batch_labelize_prob_vector(test_y))
+test_pred = one_hot_decode(batch_labelize_prob_vector(test_pred))
+# plot_scatter(test_y, test_pred)
 
 # method 1
 print('evaluate trend')
@@ -65,9 +78,3 @@ acc = evaluator.evaluate_trend_simple(y_true=train_y, y_pred=train_pred)
 print(acc)
 acc = evaluator.evaluate_trend_simple(y_true=test_y, y_pred=test_pred)
 print(acc)
-
-# step 7: Plot
-plt.figure(figsize=(200, 15))
-plt.plot(test_y)
-plt.plot(test_pred)
-plt.show()

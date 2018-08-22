@@ -86,7 +86,7 @@ class CNN_Config(Config):
                                 'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4', 'sale5', 'sc5']
 
         # name of labels
-        self['label_name'] = ['mid_price_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
@@ -125,10 +125,10 @@ class LM_Config(Config):
                                 'MACD_DIF', 'MACD_DEA', 'MACD_hist', 'RSI_3', 'RSI_6', 'RSI_12', 'BOLL_upper',
                                 'BOLL_middle', 'BOLL_lower']
 
-        # self['feature_name'] = ['bc1', 'sc1']
+        # self['feature_name'] = ['bc1', 'sc1', 'buy1', 'sale1']
 
         # name of labels
-        self['label_name'] = ['30s_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
