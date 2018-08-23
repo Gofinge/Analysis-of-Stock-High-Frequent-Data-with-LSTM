@@ -22,6 +22,7 @@ data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
 data = extract_feature_and_label(data, lstm_conf['feature_name'], lstm_conf['label_name'])
 
 # step 3: Preprocess
+data = feature_normalize(data, 1)
 train, test = divide_train_and_test(data, lstm_conf['training_set_proportion'])
 train_x, train_y = data_transform_lstm(train, lstm_conf['time_step'])
 test_x, test_y = data_transform_lstm(test, lstm_conf['time_step'])
