@@ -13,18 +13,16 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=0,
-                 load_file_name='lstm_next_mid_price_delta.h5')
+lstm_conf.update(use_previous_model=False)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-# mid_price = data['mid_price']
 data = extract_feature_and_label(data, lstm_conf['feature_name'], lstm_conf['label_name'])
 
 # step 3: Preprocess
-data = feature_normalize(data)
+data = feature_normalize(data, 1)
 train, test = divide_train_and_test(data, lstm_conf['training_set_proportion'])
 train_x, train_y = data_transform_lstm(train, lstm_conf['time_step'])
 test_x, test_y = data_transform_lstm(test, lstm_conf['time_step'])
@@ -45,22 +43,22 @@ test_pred = network.predict(test_x)
 evaluator = Evaluator()
 
 # method1
-acc = evaluator.evaluate_trend(y_true=train_y, y_pred=train_pred)
-print(acc)
-acc = evaluator.evaluate_trend(y_true=test_y, y_pred=test_pred)
-print(acc)
+train_acc = evaluator.evaluate_trend(y_true=train_y, y_pred=train_pred)
+print('train=', train_acc)
+test_acc = evaluator.evaluate_trend(y_true=test_y, y_pred=test_pred)
+print('test=', test_acc)
 
 # method 2
 acc_train_list = evaluator.evaluate_divided_trend(train_y, train_pred)
 acc_test_list = evaluator.evaluate_divided_trend(test_y, test_pred)
-print('acc_train_list = ' + str(acc_train_list))
-print('acc_test_list = ' + str(acc_test_list))
+print('train=', acc_train_list)
+print('test=', acc_test_list)
 
 # method 3
-acc = evaluator.evaluate_trend_simple(train_y, train_pred)
-print(acc)
-acc = evaluator.evaluate_trend_simple(test_y, test_pred)
-print(acc)
+train_acc = evaluator.evaluate_trend_simple(train_y, train_pred)
+print('train=', train_acc)
+test_acc = evaluator.evaluate_trend_simple(test_y, test_pred)
+print('test=', test_acc)
 
 # feature_list = lstm_conf['feature_name']
 # save_feature_selection(feature_list, acc)
