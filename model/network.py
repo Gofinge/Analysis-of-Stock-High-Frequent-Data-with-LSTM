@@ -56,7 +56,6 @@ class LSTM_MV(Network):
         mean = BatchNormalization()(mean)
         mean = Activation('relu')(mean)
         mean = Dense(units=1, name='mean')(mean)
-        mean = Activation('tanh')(mean)
 
         variance = Dense(units=3)(x)
         variance = BatchNormalization()(variance)
@@ -65,7 +64,7 @@ class LSTM_MV(Network):
         variance = Activation('relu')(variance)
 
         model = Model(inputs=init, outputs=[mean, variance])
-        losses = [drop_zero, 'mse']
+        losses = ['mse', 'mse']
 
         model.compile(loss=losses, optimizer='RMSProp')
         return model
@@ -90,7 +89,7 @@ class LSTMs(Network):
             model.add(lstm)
         model.add(Flatten())
         model.add(Dense(1, activation='tanh'))
-        model.compile(loss='mse', optimizer='RMSProp')
+        model.compile(loss=drop_zero, optimizer='RMSProp')
         return model
 
     def strong_train(self, train_x, train_y, epochs=5):
