@@ -1,6 +1,4 @@
 from model.network import LSTM_MV
-import keras.backend as K
-from model.config import *
 import warnings
 import pandas as pd
 from model.utils import *

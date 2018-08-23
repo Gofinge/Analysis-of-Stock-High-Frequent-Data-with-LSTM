@@ -1,6 +1,5 @@
 import os
 
-
 eps = 0.005
 z_95 = 1.2
 
@@ -58,7 +57,7 @@ class LSTM_Config(Config):
         self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1', 'mid_price', 'wb', 'amount', 'price']
 
         # name of labels
-        self['label_name'] = ['mid_price_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
