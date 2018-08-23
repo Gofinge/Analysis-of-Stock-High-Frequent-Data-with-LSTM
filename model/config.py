@@ -1,7 +1,7 @@
 import os
 
 eps = 0.005
-z_95 = 1.2
+z_95 = 1
 
 
 class Config(dict):
@@ -131,7 +131,7 @@ class LM_Config(Config):
         # self['feature_name'] = ['bc1', 'sc1', 'buy1', 'sale1']
 
         # name of labels
-        self['label_name'] = ['next_delta']
+        self['label_name'] = ['30s_mean_price_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])

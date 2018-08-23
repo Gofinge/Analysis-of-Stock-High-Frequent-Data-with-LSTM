@@ -42,12 +42,12 @@ dtrain = xgb.DMatrix(train_x, train_y)
 param = {
     'booster': 'gbtree',
     'silent': True,
-    'eta': 0.01,
-    'max_depth': 4,
-    'gamma': 0.1,
-    'objective': 'multi:softmax',
-    'num_class': 3,
-    'seed': 1000,
+    'eta': 0.1,
+    'max_depth': 3,
+    'gamma': 0.2,
+    'objective': 'binary:logistic',
+    # 'num_class': 2,
+    'seed': 1,
     'scale_pos_weight': 1
 }
 

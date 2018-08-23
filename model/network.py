@@ -42,29 +42,31 @@ class LSTM_MV(Network):
 
     def _init_model(self):
         init = Input(self._shape)
-        x = init
+        mean, variance = init, init
         for i in range(self._LSTM_layer_num):
             neuron_num = self._LSTM_neuron_num[i]
             if i == 0:
-                lstm = LSTM(units=neuron_num, input_shape=self._shape, return_sequences=True)
+                lstm = LSTM(units=neuron_num, return_sequences=True)
             else:
                 lstm = LSTM(units=neuron_num, return_sequences=True)
-            x = lstm(x)
-        x = Flatten()(x)
+            mean, variance = lstm(mean), lstm(variance)
 
-        mean = Dense(units=3)(x)
+        mean, variance = Flatten()(mean), Flatten()(variance)
+
+        mean = Dense(units=3)(mean)
         mean = BatchNormalization()(mean)
-        mean = Activation('relu')(mean)
+        mean = Activation('tanh')(mean)
         mean = Dense(units=1, name='mean')(mean)
+        mean = Activation('tanh')(mean)
 
-        variance = Dense(units=3)(x)
+        variance = Dense(units=3)(variance)
         variance = BatchNormalization()(variance)
         variance = Activation('relu')(variance)
         variance = Dense(units=1, name='variance')(variance)
         variance = Activation('relu')(variance)
 
         model = Model(inputs=init, outputs=[mean, variance])
-        losses = ['mse', 'mse']
+        losses = [two_class_penalty, 'mse']
 
         model.compile(loss=losses, optimizer='RMSProp')
         return model

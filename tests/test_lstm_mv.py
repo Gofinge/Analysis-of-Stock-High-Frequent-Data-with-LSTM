@@ -9,10 +9,10 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=True,
+lstm_conf.update(use_previous_model=False,
                  load_file_name='lstm_mv.h5',
                  save_file_name='lstm_mv.h5')
-lstm_conf.update(label_name=['30s_mean_price', '30s_price', '30s_mean_price_delta', '30s_price_std'])
+lstm_conf.update(label_name=['30s_mean_price', 'mid_price', '30s_mean_price_delta', '30s_price_std'])
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
@@ -23,8 +23,8 @@ data = extract_feature_and_label(data, lstm_conf['feature_name'], lstm_conf['lab
 # step 3: Preprocess
 data = feature_normalize(data, 4)
 train, test = divide_train_and_test(data, lstm_conf['training_set_proportion'])
-train_x, train_y, train_price, train_mean_price = data_transform_lstm_mv(train, lstm_conf['time_step'])
-test_x, test_y, test_price, test_mean_price = data_transform_lstm_mv(test, lstm_conf['time_step'])
+train_x, train_y, train_mid_price, train_mean_price = data_transform_lstm_mv(train, lstm_conf['time_step'])
+test_x, test_y, test_mid_price, test_mean_price = data_transform_lstm_mv(test, lstm_conf['time_step'])
 
 # step 4: Create and train model_weight
 network = LSTM_MV(lstm_conf)
@@ -38,16 +38,26 @@ else:
 train_pred = network.predict(train_x)
 test_pred = network.predict(test_x)
 
-for i in range(len(train_pred[0])):
-    train_pred[0][i] += train_mean_price[i]
-for i in range(len(test_pred[0])):
-    test_pred[0][i] += test_mean_price[i]
-
 # step 6: Evaluate
 evaluator = Evaluator()
-train_acc = evaluator.evaluate_mean_and_variance(train_price, train_pred)
+
+train_acc = evaluator.evaluate_trend_simple(train_y[0], train_pred[0])
+print('train_acc=', train_acc)
+test_acc = evaluator.evaluate_trend_simple(test_y[0], test_pred[0])
+print('test_acc=', test_acc)
+
+plt.plot(train_y[0][0:1000])
+plt.plot(train_pred[0][0:1000])
+plt.show()
+
+for i in range(len(train_pred[0])):
+    train_pred[0][i] += train_mid_price[i]
+for i in range(len(test_pred[0])):
+    test_pred[0][i] += test_mid_price[i]
+
+train_acc = evaluator.evaluate_mean_and_variance(train_mid_price, train_pred)
 print('train=', train_acc)
-test_acc = evaluator.evaluate_mean_and_variance(test_price, test_pred)
+test_acc = evaluator.evaluate_mean_and_variance(test_mid_price, test_pred)
 print('test=', test_acc)
 
-plot_confidence_interval(test_mean_price, test_price, test_pred[0], test_pred[1], 3000)
+# plot_confidence_interval(test_mean_price, test_pred[0], test_pred[1], 3000)

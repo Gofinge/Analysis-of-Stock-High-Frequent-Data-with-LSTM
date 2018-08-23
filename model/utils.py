@@ -25,15 +25,15 @@ def data_transform_lstm_mv(raw_data, time_step):
     x = []
     y1 = []
     y2 = []
-    price = []
+    mid_price = []
     mean_price = []
     for i in range(window_num):
         x.append(data[i:time_step + i, 0:data.shape[1] - 4])
         y1.append(data[time_step + i - 1, -2])
         y2.append(data[time_step + i - 1, -1])
-        price.append(data[time_step + i - 1, -3])
+        mid_price.append(data[time_step + i - 1, -3])
         mean_price.append(data[time_step + i - 1, -4])
-    return np.array(x), [np.array(y1), np.array(y2)], price, mean_price
+    return np.array(x), [np.array(y1), np.array(y2)], mid_price, mean_price
 
 
 def data_transform_cnn(raw_data, time_step):
@@ -304,16 +304,14 @@ def plot_scatter(y_true, y_pred, sample_size=50):
     plt.show()
 
 
-def plot_confidence_interval(true_mean_price, true_price, mean_list, std_list, sample_num=300):
+def plot_confidence_interval(true_mean_price, mean_list, std_list, sample_num=300):
     true_mean_price = true_mean_price[0:sample_num]
-    true_price = true_price[0:sample_num]
     mean_list = mean_list[0:sample_num]
     std_list = std_list[0:sample_num]
     plt.figure(figsize=(100, 15))
     up, down = mean_list + std_list * z_95, mean_list - std_list * z_95
 
     plt.plot(true_mean_price, color='g')
-    plt.plot(true_price, color='b')
     plt.plot(mean_list, color='y')
     plt.plot(up, color='r')
     plt.plot(down, color='r')
