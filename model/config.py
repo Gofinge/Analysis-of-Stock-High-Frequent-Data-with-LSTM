@@ -1,7 +1,7 @@
 import os
 
 eps = 0.005
-z_95 = 1.2
+z_95 = 1.65
 
 
 class Config(dict):
@@ -19,7 +19,7 @@ class Config(dict):
         self['training_set_proportion'] = 0.5
 
         # time step (each step takes 3 sec)
-        self['time_step'] = 5
+        self['time_step'] = 50
 
         # batch size (number of window)
         self['batch_size'] = 150
@@ -54,7 +54,7 @@ class LSTM_Config(Config):
     def __init__(self):
         Config.__init__(self)
         # name of features
-        self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1', 'price', 'wb', 'amount', 'mid_price']
+        self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1']
 
         # name of labels
         self['label_name'] = ['next_delta']

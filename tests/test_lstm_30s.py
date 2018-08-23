@@ -13,11 +13,12 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=0,
-                 label_name=['30s_mid_price_delta'],
-                 feature_name=['buy4', 'bc4', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
-                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'sale4', 'sc4'],
-                 training_set_proportion=0.67)
+lstm_conf.update(use_previous_model=1,
+                 label_name=['2.5min_mean_price'],
+                 feature_name=['previous_2.5min_mean_price', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
+                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'price',
+                               'wb', 'amount', 'mid_price', 'MACD_hist', 'MACD_DIF'],
+                 training_set_proportion=0.5)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
@@ -28,12 +29,13 @@ feature_and_label_name = lstm_conf['feature_name']
 feature_and_label_name.extend(lstm_conf['label_name'])
 data = data[feature_and_label_name].values
 
+
 # step 3: Preprocess
-data = feature_normalize(data)
+# data = feature_normalize(data)
 train_size = int(len(data) * lstm_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
-train_x, train_y = data_transform_lstm(train, lstm_conf['time_step'])
-test_x, test_y = data_transform_lstm(test, lstm_conf['time_step'])
+train_x, train_y = data_transform_lstm_30s(train, lstm_conf['time_step'])
+test_x, test_y = data_transform_lstm_30s(test, lstm_conf['time_step'])
 
 # step 4: Create and train model_weight
 network = LSTMs(lstm_conf)
@@ -81,6 +83,7 @@ plt.title('train_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
+
 '''
 plt.figure(figsize=(200, 15))
 plt.plot(test_y)
@@ -92,6 +95,8 @@ plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
 '''
+
+
 
 
 
