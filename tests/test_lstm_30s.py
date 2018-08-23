@@ -72,17 +72,16 @@ train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
 
-'''
+
 plt.figure(figsize=(200, 15))
 plt.plot(train_y)
 plt.plot(train_pred)
-plt.plot(train_mid_price-8.3)
 plt.legend(['train_label', 'train_predict', 'train_mid_price - 8.3'], loc='upper right')
 plt.title('train_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
-
+'''
 plt.figure(figsize=(200, 15))
 plt.plot(test_y)
 plt.plot(test_pred)

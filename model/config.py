@@ -55,10 +55,10 @@ class LSTM_Config(Config):
     def __init__(self):
         Config.__init__(self)
         # name of features
-        self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1', 'mid_price', 'wb', 'amount', 'price']
+        self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1', 'price', 'wb', 'amount', 'mid_price']
 
         # name of labels
-        self['label_name'] = ['mid_price_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
