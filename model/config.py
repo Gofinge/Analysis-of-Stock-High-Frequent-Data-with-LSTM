@@ -19,7 +19,7 @@ class Config(dict):
         self['training_set_proportion'] = 0.5
 
         # time step (each step takes 3 sec)
-        self['time_step'] = 50
+        self['time_step'] = 10
 
         # batch size (number of window)
         self['batch_size'] = 150

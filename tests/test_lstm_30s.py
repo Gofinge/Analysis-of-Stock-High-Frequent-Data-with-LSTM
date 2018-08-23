@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=1,
+lstm_conf.update(use_previous_model=0,
                  label_name=['2.5min_mean_price'],
                  feature_name=['previous_2.5min_mean_price', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
                                'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'price',
