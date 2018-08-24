@@ -29,7 +29,7 @@ class Config(dict):
 
         self.path = os.getcwd()[:-5]
         # data file path
-        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20.csv'
+        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20 1.csv'
 
         # use previous model_weight
         self['use_previous_model'] = False
@@ -69,7 +69,7 @@ class LSTM_Config(Config):
         self['batch_size'] = 150
 
         # number of neurons of each LSTM layer
-        self['LSTM_neuron_num'] = [20, 10, 5]
+        self['LSTM_neuron_num'] = [20, 10]
 
         # epoch
         self['epoch'] = 100

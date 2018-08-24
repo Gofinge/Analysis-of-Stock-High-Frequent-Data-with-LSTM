@@ -25,10 +25,10 @@ def data_transform_lstm_30s(raw_data, time_step):
     x = []
     y = []
     for i in range(window_num):
-        window = data[i:time_step + i, 0:data.shape[1] - 4]
+        window = data[i:time_step + i, 0:data.shape[1] - 1]
         window_mean_price = np.average(window[:, 0])
         x.append(data[i:time_step + i, 0:data.shape[1] - 1])
-        y.append(data[time_step + i - 1, -1] - data[time_step + i - 1, 1])
+        y.append(data[time_step + i - 1, -1])
     return np.array(x), np.array(y)
 
 
@@ -74,10 +74,20 @@ def data_transform_for_xgboost(raw_data):
 
 
 def feature_normalize(data, label_num=1):
+    scaler_feature = MinMaxScaler(feature_range=(0, 1))
+    data[:, 0:-label_num] = scaler_feature.fit_transform(data[:, 0:-label_num])
+    return data
+
+
+def normalize(data, label_num=1):
     scaler = MinMaxScaler()
     data = scaler.fit_transform(data)
     # data[:, 0:-label_num] = scaler.fit_transform(data[:, 0:-label_num])
     return data
+
+
+def inverse(dataSet, scaler):
+    return scaler.inverse_transform(dataSet)
 
 
 def drop_zero(y_true, y_pred):
