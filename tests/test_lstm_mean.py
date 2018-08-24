@@ -20,7 +20,9 @@ lstm_conf.update(use_previous_model=0,
                                'wb', 'amount', 'mid_price', 'MACD_hist', 'MACD_DIF'],
                  training_set_proportion=0.8,
                  time_step=10,
-                 load_file_name='lstm_next_mid_price_delta.h5')
+                 epoch=10,
+                 LSTM_neuron_num=[20, 20, 10]
+                 )
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')

@@ -67,6 +67,7 @@ class LSTM_MV(Network):
         losses = ['mse', 'mse']
 
         model.compile(loss=losses, optimizer='RMSProp')
+        print(model.summary())
         return model
 
 
@@ -90,7 +91,11 @@ class LSTMs(Network):
         model.add(Flatten())
         model.add(Dense(1, activation='tanh'))
         model.compile(loss=drop_zero, optimizer='RMSProp')
+        print(model.summary())
         return model
+
+    def train_shuttle(self, train_x, train_y):
+        self._model.fit(train_x, train_y, batch_size=self._batch_size, epochs=self._epoch, shuffle=False, verbose=1)
 
     def strong_train(self, train_x, train_y, epochs=5):
         temp_train_x = train_x
