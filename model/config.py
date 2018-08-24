@@ -69,10 +69,10 @@ class LSTM_Config(Config):
         self['batch_size'] = 150
 
         # number of neurons of each LSTM layer
-        self['LSTM_neuron_num'] = [20, 10]
+        self['LSTM_neuron_num'] = [20, 10, 5]
 
         # epoch
-        self['epoch'] = 100
+        self['epoch'] = 300
 
         # save file name
         self['save_file_name'] = 'lstm_test' + '.h5'
