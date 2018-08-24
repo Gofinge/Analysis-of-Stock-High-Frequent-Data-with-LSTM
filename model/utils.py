@@ -6,6 +6,7 @@ import csv
 from sklearn.neighbors import KDTree
 import matplotlib.pyplot as plt
 from model.config import *
+from tensorflow.python.ops import *
 
 
 def data_transform_lstm(raw_data, time_step):
@@ -122,6 +123,17 @@ def three_class_penalty(y_true, y_pred):
     square = tf.square(y_true - y_pred)
     sum = K.mean(tf.multiply(coef, square))
     return sum
+
+
+def smooth(y_true, y_pred):
+    diff = y_true - y_pred
+    mse = K.mean(tf.square(diff))
+    rs = bitwise_ops.right_shift(diff)
+    grad = rs - diff
+    rs = bitwise_ops.right_shift(grad)
+    grad = rs - grad
+    sum = K.mean(tf.square(grad))
+    return sum + mse
 
 
 def one_hot_encode(y, category_num):
