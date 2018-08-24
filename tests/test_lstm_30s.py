@@ -14,9 +14,10 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
-                 label_name=['2.5min_mean_price'],
-                 feature_name=['previous_2.5min_mean_price', 'buy3', 'bc3', 'buy2', 'bc2', 'buy1', 'bc1',
-                               'sale1', 'sc1', 'sale2', 'sc2', 'sale3', 'sc3', 'price',
+                 epoch=100,
+                 label_name=['2.5min_mean_price_delta'],
+                 feature_name=['previous_2.5min_mean_price', 'buy1', 'bc1',
+                               'sale1', 'sc1', 'price',
                                'wb', 'amount', 'mid_price', 'MACD_hist', 'MACD_DIF'],
                  training_set_proportion=0.5)
 
@@ -31,7 +32,7 @@ data = data[feature_and_label_name].values
 
 
 # step 3: Preprocess
-# data = feature_normalize(data)
+data = feature_normalize(data)
 train_size = int(len(data) * lstm_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_lstm_30s(train, lstm_conf['time_step'])
@@ -74,10 +75,9 @@ train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
 
-
 plt.figure(figsize=(200, 15))
-plt.plot(train_y)
-plt.plot(train_pred)
+plt.plot(test_y)
+plt.plot(test_pred)
 plt.legend(['train_label', 'train_predict', 'train_mid_price - 8.3'], loc='upper right')
 plt.title('train_set plot')
 plt.xlabel('time')
