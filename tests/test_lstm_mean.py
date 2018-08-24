@@ -14,12 +14,15 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
-                 epoch=100,
                  label_name=['2.5min_mean_price_delta'],
-                 feature_name=['previous_2.5min_mean_price', 'buy1', 'bc1',
-                               'sale1', 'sc1', 'price',
+                 feature_name=['previous_2.5min_mean_price', 'buy2', 'bc2', 'buy1', 'bc1',
+                               'sale1', 'sc1', 'sale2', 'sc2', 'price',
                                'wb', 'amount', 'mid_price', 'MACD_hist', 'MACD_DIF'],
-                 training_set_proportion=0.5)
+                 training_set_proportion=0.8,
+                 time_step=10,
+                 epoch=10,
+                 LSTM_neuron_num=[20, 20, 10]
+                 )
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
@@ -75,26 +78,26 @@ train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
 
+
 plt.figure(figsize=(200, 15))
-plt.plot(test_y)
-plt.plot(test_pred)
-plt.legend(['train_label', 'train_predict', 'train_mid_price - 8.3'], loc='upper right')
+plt.plot(train_y)
+plt.plot(train_pred)
+plt.legend(['train_label', 'train_predict'], loc='upper right')
 plt.title('train_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
 
-'''
+
 plt.figure(figsize=(200, 15))
 plt.plot(test_y)
 plt.plot(test_pred)
-plt.plot(np.arange(len(test_mid_price)), test_mid_price-8.3)
-plt.legend(['test_label', 'test_predict', 'test_mid_price - 8.3'], loc='upper right')
+plt.legend(['test_label', 'test_predict'], loc='upper right')
 plt.title('test_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
-'''
+
 
 
 

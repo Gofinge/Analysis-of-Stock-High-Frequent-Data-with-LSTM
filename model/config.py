@@ -72,7 +72,7 @@ class LSTM_Config(Config):
         self['LSTM_neuron_num'] = [20, 20, 10]
 
         # epoch
-        self['epoch'] = 10
+        self['epoch'] = 100
 
         # save file name
         self['save_file_name'] = 'lstm_test' + '.h5'
