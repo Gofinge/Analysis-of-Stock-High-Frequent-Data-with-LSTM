@@ -90,7 +90,7 @@ class LSTMs(Network):
             model.add(lstm)
         model.add(Flatten())
         model.add(Dense(1, activation='tanh'))
-        model.compile(loss=drop_zero, optimizer='RMSProp')
+        model.compile(loss='mse', optimizer='RMSProp')
         print(model.summary())
         return model
 

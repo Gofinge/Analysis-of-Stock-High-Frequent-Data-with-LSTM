@@ -29,7 +29,7 @@ class Config(dict):
 
         self.path = os.getcwd()[:-5]
         # data file path
-        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20 1.csv'
+        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20.csv'
 
         # use previous model_weight
         self['use_previous_model'] = False
@@ -57,7 +57,7 @@ class LSTM_Config(Config):
         self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1']
 
         # name of labels
-        self['label_name'] = ['next_delta']
+        self['label_name'] = ['mid_price_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])

@@ -13,7 +13,9 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=False)
+lstm_conf.update(use_previous_model=1,
+                 load_file_name='lstm_next_mid_price_delta.h5'
+)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
