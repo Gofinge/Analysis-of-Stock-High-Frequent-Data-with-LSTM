@@ -6,6 +6,7 @@ import csv
 from sklearn.neighbors import KDTree
 import matplotlib.pyplot as plt
 from model.config import *
+from tensorflow.python.ops import *
 
 
 def data_transform_lstm(raw_data, time_step):
@@ -81,8 +82,7 @@ def feature_normalize(data, label_num=1):
 
 def normalize(data, label_num=1):
     scaler = MinMaxScaler()
-    data = scaler.fit_transform(data)
-    # data[:, 0:-label_num] = scaler.fit_transform(data[:, 0:-label_num])
+    data[:, 0:-label_num] = scaler.fit_transform(data[:, 0:-label_num])
     return data
 
 
@@ -123,6 +123,17 @@ def three_class_penalty(y_true, y_pred):
     square = tf.square(y_true - y_pred)
     sum = K.mean(tf.multiply(coef, square))
     return sum
+
+
+def smooth(y_true, y_pred):
+    diff = y_true - y_pred
+    mse = K.mean(tf.square(diff))
+    rs = bitwise_ops.right_shift(diff)
+    grad = rs - diff
+    rs = bitwise_ops.right_shift(grad)
+    grad = rs - grad
+    sum = K.mean(tf.square(grad))
+    return sum + mse
 
 
 def one_hot_encode(y, category_num):
@@ -307,6 +318,17 @@ def divide_train_and_test(data, ratio):
     train_size = int(len(data) * ratio)
     train, test = data[0:train_size, :], data[train_size:len(data), :]
     return train, test
+
+
+def bagging(*pred_list):
+    bagging_pred = []
+    for i in range(len(pred_list[0])):
+        sum = 0
+        for j in range(len(pred_list)):
+            sum += pred_list[j][i]
+        sum /= len(pred_list)
+        bagging_pred.append(sum)
+    return bagging_pred
 
 
 def plot_scatter(y_true, y_pred, sample_size=50):

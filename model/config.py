@@ -69,7 +69,7 @@ class LSTM_Config(Config):
         self['batch_size'] = 150
 
         # number of neurons of each LSTM layer
-        self['LSTM_neuron_num'] = [20, 10, 5]
+        self['LSTM_neuron_num'] = [20, 20, 10]
 
         # epoch
         self['epoch'] = 100
@@ -126,12 +126,12 @@ class LM_Config(Config):
                                 'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1',
                                 'bc2_minus_sc2', 'bc3_minus_sc3',
                                 'MACD_DIF', 'MACD_DEA', 'MACD_hist', 'RSI_3', 'RSI_6', 'RSI_12', 'BOLL_upper',
-                                'BOLL_middle', 'BOLL_lower']
+                                'BOLL_middle', 'BOLL_lower', 'previous_2.5min_mean_price']
 
         # self['feature_name'] = ['bc1', 'sc1', 'buy1', 'sale1']
 
         # name of labels
-        self['label_name'] = ['30s_mean_price_delta']
+        self['label_name'] = ['2.5min_mean_price_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])

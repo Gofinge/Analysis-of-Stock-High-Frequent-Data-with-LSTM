@@ -19,7 +19,7 @@ train, test = divide_train_and_test(data, conf['training_set_proportion'])
 train_x, train_y = data_transform_for_xgboost(train)
 test_x, test_y = data_transform_for_xgboost(test)
 
-clf = RandomForestRegressor(n_estimators=100, max_depth=4)
+clf = RandomForestRegressor(n_estimators=100, max_depth=6)
 clf.fit(train_x, train_y)
 
 evaluator = Evaluator()
