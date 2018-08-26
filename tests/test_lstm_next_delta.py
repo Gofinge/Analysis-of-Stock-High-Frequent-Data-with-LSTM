@@ -13,9 +13,12 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=0,
-                 load_file_name='lstm_next_mid_price_delta.h5'
-)
+lstm_conf.update(use_previous_model=1,
+                 load_file_name='lstm_next_delta.h5',
+                 feature_name=['buy1', 'bc1', 'sale1', 'sc1', 'price', 'wb', 'amount', 'mid_price'],
+                 label_name=['next_delta'],
+                 LSTM_neuron_num=[20, 10, 5]
+                 )
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
