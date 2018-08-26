@@ -14,14 +14,15 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
-                 label_name=['2.5min_mean_price_delta_v2'],
-                 feature_name=['previous_2.5min_mean_v2', 'RSI_12', 'buy2', 'bc2', 'buy1', 'bc1',
+                 label_name=['2.5min_mean_price_delta'],
+                 feature_name=['previous_2.5min_mean_price', 'RSI_12', 'buy2', 'bc2', 'buy1', 'bc1',
                                'sale1', 'sc1', 'sale2', 'sc2', 'price',
                                'wb', 'amount', 'mid_price', 'MACD_DIF', 'MACD_DEA'],
-                 training_set_proportion=0.5,
-                 time_step=10,
-                 epoch=20,
-                 LSTM_neuron_num=[20, 20, 10]
+                 training_set_proportion=0.8,
+                 time_step=20,
+                 epoch=10,
+                 LSTM_neuron_num=[20, 20, 10],
+                 load_file_name='lstm_2.5min_[20,20,10].h5'
                  )
 
 # step 1: Get dataset (csv)
