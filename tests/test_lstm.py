@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=1,
+lstm_conf.update(use_previous_model=0,
                  load_file_name='lstm_next_mid_price_delta.h5'
 )
 

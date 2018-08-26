@@ -14,11 +14,11 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
-                 label_name=['2.5min_mean_price'],
-                 feature_name=['previous_2.5min_mean_price', 'buy2', 'bc2', 'buy1', 'bc1',
+                 label_name=['2.5min_mean_price_delta_v2'],
+                 feature_name=['previous_2.5min_mean_v2', 'RSI_12', 'buy2', 'bc2', 'buy1', 'bc1',
                                'sale1', 'sc1', 'sale2', 'sc2', 'price',
-                               'wb', 'amount', 'mid_price', 'MACD_hist', 'MACD_DIF'],
-                 training_set_proportion=0.8,
+                               'wb', 'amount', 'mid_price', 'MACD_DIF', 'MACD_DEA'],
+                 training_set_proportion=0.5,
                  time_step=10,
                  epoch=20,
                  LSTM_neuron_num=[20, 20, 10]
@@ -40,7 +40,6 @@ train_size = int(len(data) * lstm_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
 train_x, train_y = data_transform_lstm_30s(train, lstm_conf['time_step'])
 test_x, test_y = data_transform_lstm_30s(test, lstm_conf['time_step'])
-print(train_y)
 
 # step 4: Create and train model_weight
 network = LSTMs(lstm_conf)
