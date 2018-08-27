@@ -11,10 +11,16 @@ Experiment
 ====
 Prediction of next tick's price:
 -------
+label: next price delta
 <p class="half" align="center">
-  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/rg_lstm_npd.png" width="350px" height="350px"/>
-  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/rg_lstm_mpd.png" width="350px" height="350px"/>
-  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/cl_rf_npd.png" width="350px" height="350px"/>
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/rg_lstm_npd.png"/>
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/cl_rf.png"/>
 </p>
+
+label: next mid price delta
+<p class="half" aligh="center">
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/rg_lstm_mpd.png"/>  
+</p>
+
 Prediction of future mean price:
 -------
