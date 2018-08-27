@@ -24,3 +24,6 @@ label: next mid price delta
 
 Prediction of future mean price:
 -------
+<p class="half" aligh="center">
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/rg_lstm_mean.png"/>  
+</p>
