@@ -33,7 +33,11 @@ Prediction of future mean price:
 Feature importance:
 -------
 The size of circle indicates its feature importance.
+- model: Random Forest, label: *next price delta*
 <p class="half" aligh="center">
   <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/fi_rf_npd.png"/>  
+</p>
+- model: XGBoost, label: *next price delta*
+<p>
   <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/blob/master/plot/fi_xgboost_npd.png"/>  
 </p>
