@@ -10,4 +10,11 @@ XGBoost and random forest.
 Experiment
 ====
 Prediction of next tick's price:
+-------
+<p class="half" align="center">
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/rg_lstm_npd.png" width="350px" height="350px"/>
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/rg_lstm_mpd.png" width="350px" height="350px"/>
+  <img src="https://github.com/Gofinge/Analysis-of-Stock-High-Frequent-Data-with-ML/edit/master/plot/cl_rf_npd.png" width="350px" height="350px"/>
+</p>
 Prediction of future mean price:
+-------
