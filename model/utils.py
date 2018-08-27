@@ -388,8 +388,9 @@ def plot_classification(y_true, y_pred, sample_num=1000):
 
 
 def plot_regression(y_true, y_pred, sample_num=1000, title=''):
-    y_true = y_true[0:sample_num]
-    y_pred = y_pred[0:sample_num]
+    start = 1000
+    y_true = y_true[start:start + sample_num]
+    y_pred = y_pred[start:start + sample_num]
 
     plt.figure(figsize=(12, 8))
 

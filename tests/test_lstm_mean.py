@@ -13,14 +13,14 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=0,
+lstm_conf.update(use_previous_model=True,
                  label_name=['2.5min_mean_price_delta'],
                  feature_name=['previous_2.5min_mean_price', 'RSI_12', 'buy2', 'bc2', 'buy1', 'bc1',
                                'sale1', 'sc1', 'sale2', 'sc2', 'price',
                                'wb', 'amount', 'mid_price', 'MACD_DIF', 'MACD_DEA'],
                  training_set_proportion=0.8,
                  time_step=20,
-                 epoch=10,
+                 epoch=30,
                  LSTM_neuron_num=[20, 20, 10],
                  load_file_name='lstm_2.5min_[20,20,10].h5'
                  )
@@ -34,6 +34,7 @@ data = pd.read_csv(lstm_conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
 mid_price = data['mid_price']
+previous = data['previous_2.5min_mean_price']
 # price = data['price']
 # true_2_5_min_mean_price = data['2.5min_mean_price']
 feature_and_label_name = lstm_conf['feature_name']
@@ -82,10 +83,19 @@ print('acc_train_list = ' + str(acc_train_list))
 print('acc_test_list = ' + str(acc_test_list))
 
 # step 7: Plot
-train_mid_price = mid_price[0:train_size]
-test_mid_price = mid_price[train_size:len(mid_price)]
-test_mid_price = test_mid_price[:-9]
-y_true = np.add(test_mid_price, test_y)
+# train_mid_price = mid_price[0:train_size]
+# test_mid_price = mid_price[train_size:len(mid_price)]
+# test_mid_price = test_mid_price[:-9]
+#
+# y_true = np.add(test_mid_price, test_y)
+# test_pred = [value[0] for value in test_pred]
+# y_pred = np.add(test_mid_price, test_pred)
+# plot_regression(y_true, y_pred, sample_num=400, title=lstm_conf['label_name'][0])
+
+test_previous = previous[train_size:len(previous)]
+test_previous = test_previous[:-(len(test_previous)-len(test_y))]
+
+y_true = np.add(test_previous, test_y)
 test_pred = [value[0] for value in test_pred]
-y_pred = np.add(test_mid_price, test_pred)
-plot_regression(y_true, y_pred, sample_num=400, title=lstm_conf['label_name'][0])
+y_pred = np.add(test_previous, test_pred)
+plot_regression(y_true, y_pred, sample_num=2000, title=lstm_conf['label_name'][0])
