@@ -7,6 +7,8 @@ from sklearn.neighbors import KDTree
 import matplotlib.pyplot as plt
 from model.config import *
 from tensorflow.python.ops import *
+import seaborn as sns
+import pandas as pd
 
 
 def data_transform_lstm(raw_data, time_step):
@@ -306,6 +308,7 @@ def show_feature_importance(clf, feature_list):
 
     for i in range(len(ind)):
         print(feature_list[i], ': ', fi_list[i])
+    np.save('feature_importance', [feature_list, fi_list])
 
 
 def extract_feature_and_label(data, feature_name_list, label_name_list):
@@ -365,4 +368,33 @@ def plot_confidence_interval(true_mean_price, mean_list, std_list, sample_num=30
     plt.legend(['true_mean_price', 'true_price', 'predict_mean', 'confidence interval'], loc='upper left')
     plt.xlabel('time')
     plt.ylabel('price')
+    plt.show()
+
+
+def plot_classification(y_true, y_pred, sample_num=1000):
+    y_true = y_true[0:sample_num]
+    y_pred = y_pred[0:sample_num]
+    correct = [y_true[i] ^ y_pred[i] for i in range(len(y_true))]
+    height = np.random.random(len(y_true))
+    dt = pd.DataFrame(data=list(zip(y_true, y_pred, correct, height)),
+                      columns=['true', 'predicted', 'correct', 'height'])
+    sns.stripplot(x='true', y='height', hue='predicted', data=dt, alpha=0.8)
+    plt.title('XGBoost')
+    plt.ylabel('')
+    plt.yticks(range(1), [''])
+    plt.xlabel('trend')
+    plt.xticks(range(3), ['fall(-1)', 'unchanged', 'rise(1)'])
+    plt.show()
+
+
+def plot_regression(y_true, y_pred, sample_num=1000, title=''):
+    y_true = y_true[0:sample_num]
+    y_pred = y_pred[0:sample_num]
+
+    plt.figure(figsize=(12, 8))
+
+    plt.plot(y_true)
+    plt.plot(y_pred, color='green')
+    plt.title(title)
+    plt.legend(['true', 'predicted'])
     plt.show()
