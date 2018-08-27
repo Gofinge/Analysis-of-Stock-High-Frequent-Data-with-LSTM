@@ -57,7 +57,7 @@ class LSTM_Config(Config):
         self['feature_name'] = ['buy1', 'bc1', 'sale1', 'sc1']
 
         # name of labels
-        self['label_name'] = ['next_delta']
+        self['label_name'] = ['mid_price_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])
@@ -69,7 +69,7 @@ class LSTM_Config(Config):
         self['batch_size'] = 150
 
         # number of neurons of each LSTM layer
-        self['LSTM_neuron_num'] = [20, 20, 10]
+        self['LSTM_neuron_num'] = [20, 10, 5]
 
         # epoch
         self['epoch'] = 100

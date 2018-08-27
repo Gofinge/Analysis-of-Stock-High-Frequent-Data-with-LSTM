@@ -13,13 +13,16 @@ warnings.filterwarnings("ignore")
 K.clear_session()
 
 lstm_conf = LSTM_Config()
-lstm_conf.update(use_previous_model=True,
-                 label_name=['mid_price_delta'],
-                 feature_name=['buy1', 'bc1', 'sale1', 'sc1', 'MACD_hist', 'MACD_DIF'],
+lstm_conf.update(use_previous_model=0,
+                 label_name=['2.5min_mean_price_delta'],
+                 feature_name=['previous_2.5min_mean_price', 'RSI_12', 'buy2', 'bc2', 'buy1', 'bc1',
+                               'sale1', 'sc1', 'sale2', 'sc2', 'price',
+                               'wb', 'amount', 'mid_price', 'MACD_DIF', 'MACD_DEA'],
                  training_set_proportion=0.8,
-                 time_step=10,
-                 epoch=30,
-                 LSTM_neuron_num=[20, 20, 10]
+                 time_step=20,
+                 epoch=10,
+                 LSTM_neuron_num=[20, 20, 10],
+                 load_file_name='lstm_2.5min_[20,20,10].h5'
                  )
 
 # drop zero 72.5
@@ -38,7 +41,7 @@ feature_and_label_name.extend(lstm_conf['label_name'])
 data = data[feature_and_label_name].values
 
 # step 3: Preprocess
-data = feature_normalize(data)
+data = normalize(data)
 train_size = int(len(data) * lstm_conf['training_set_proportion'])
 train, test = data[0:train_size, :], data[train_size:len(data), :]
 # price = price[train_size + data.shape[1] - lstm_conf['time_step'] + 3:len(data)]
