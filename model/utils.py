@@ -19,6 +19,16 @@ def data_transform_lstm(raw_data, time_step):
         y.append(data[time_step + i - 1, -1])
     return np.array(x), np.array(y)
 
+def data_transform_lstm2(raw_data, time_step):
+    data = np.array(raw_data)
+    window_num = data.shape[0] - time_step + 1
+    x = []
+    y = []
+    for i in range(window_num - 1):
+        x.append(data[i:time_step + i, 0:data.shape[1] - 1])
+        y.append(data[time_step + i, -1])
+    return np.array(x), np.array(y)
+
 
 def data_transform_lstm_30s(raw_data, time_step):
     data = np.array(raw_data)
@@ -80,9 +90,9 @@ def feature_normalize(data, label_num=1):
     return data
 
 
-def normalize(data, label_num=1):
+def normalize(data):
     scaler = MinMaxScaler()
-    data[:, 0:-label_num] = scaler.fit_transform(data[:, 0:-label_num])
+    data = scaler.fit_transform(data)
     return data
 
 

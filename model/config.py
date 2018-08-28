@@ -62,7 +62,7 @@ class LSTM_Config(Config):
         # number of features
         self['feature_num'] = len(self['feature_name'])
 
-        # time step (each step takes 3 sec)
+        # time step (each step takes 3 sec)n
         self['time_step'] = 5
 
         # batch size (number of window)
