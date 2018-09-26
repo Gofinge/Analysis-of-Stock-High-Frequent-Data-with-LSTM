@@ -29,7 +29,7 @@ class Config(dict):
 
         self.path = os.getcwd()[:-5]
         # data file path
-        self['data_file_path'] = self.path + '/data/SH600031_18.6.15-18.6.20.csv'
+        self['data_file_path'] = self.path + '/data/data.csv'
 
         # use previous model_weight
         self['use_previous_model'] = False
@@ -118,20 +118,35 @@ class LM_Config(Config):
         Config.__init__(self)
 
         # name of features
-        self['feature_name'] = ['price', 'mid_price', 'VW_Avg_buy_price', 'VW_Avg_sale_price', 'aggressor_side',
-                                'relative_buy_vol', 'relative_sale_vol', 'VW_Avg_price',
-                                'VW_Avg_price_minus_current_price', 'vol', 'amount', 'cjbs', 'yclose', 'syl1', 'syl2',
-                                'buy1', 'buy2', 'buy3', 'buy4', 'buy5', 'sale1', 'sale2', 'sale3', 'sale4', 'sale5',
-                                'bc1', 'bc2', 'bc3', 'bc4', 'bc5', 'sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'wb', 'lb', 'zmm',
-                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount', 'w_buy', 'w_sale', 'bc1_minus_sc1',
-                                'bc2_minus_sc2', 'bc3_minus_sc3',
-                                'MACD_DIF', 'MACD_DEA', 'MACD_hist', 'RSI_3', 'RSI_6', 'RSI_12', 'BOLL_upper',
-                                'BOLL_middle', 'BOLL_lower', 'previous_2.5min_mean_price']
+        self['feature_name'] = ['price', 'mid_price',
+                                'VW_Avg_buy_price', 'VW_Avg_sale_price',
+                                'aggressor_side',
+                                'relative_buy_vol', 'relative_sale_vol',
+                                'VW_Avg_price',
+                                'VW_Avg_price_minus_current_price',
+                                'vol', 'amount', 'cjbs', 'yclose',
+                                'syl1', 'syl2',
+                                'buy1', 'buy2', 'buy3', 'buy4', 'buy5',
+                                'sale1', 'sale2', 'sale3', 'sale4', 'sale5',
+                                'bc1', 'bc2', 'bc3', 'bc4', 'bc5',
+                                'sc1', 'sc2', 'sc3', 'sc4', 'sc5',
+                                'wb', 'lb', 'zmm',
+                                'buy_vol', 'buy_amount', 'sale_vol', 'sale_amount',
+                                'w_buy', 'w_sale',
+                                'bc1_minus_sc1',
+                                'bc2_minus_sc2',
+                                'bc3_minus_sc3',
+                                'MACD_DIF', 'MACD_DEA', 'MACD_hist',
+                                'MACD_DIF_short', 'MACD_DEA_short', 'MACD_hist_short',
+                                'RSI_3', 'RSI_6', 'RSI_12', 'RSI_24',
+                                'BOLL_upper', 'BOLL_middle', 'BOLL_lower',
+                                'BOLL_upper_short', 'BOLL_middle_short', 'BOLL_lower_short',
+                                'previous_2.5min_mean_price']
 
         # self['feature_name'] = ['bc1', 'sc1', 'buy1', 'sale1']
 
         # name of labels
-        self['label_name'] = ['2.5min_mean_price_delta']
+        self['label_name'] = ['next_delta']
 
         # number of features
         self['feature_num'] = len(self['feature_name'])

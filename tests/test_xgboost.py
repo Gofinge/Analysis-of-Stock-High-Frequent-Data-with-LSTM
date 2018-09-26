@@ -1,24 +1,18 @@
-from model.config import *
-from model.utils import *
-from model.evaluator import Evaluator
-from model.config import *
-from model.network import *
 from model.utils import *
 from model.evaluator import Evaluator
 from keras import backend as K
 import matplotlib.pyplot as plt
 import warnings
 import pandas as pd
+from model.classifier import *
 import xgboost as xgb
-from model.classifier import *
-from sklearn import preprocessing
-from model.classifier import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
 
 conf = LM_Config()
+conf.update(use_previous_model=False)
 
 # step 1: Get dataset (csv)
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
@@ -43,7 +37,7 @@ param = {
     'booster': 'gbtree',
     'silent': True,
     'eta': 0.01,
-    'max_depth': 4,
+    'max_depth': 5,
     'gamma': 0.1,
     'objective': 'multi:softmax',
     'num_class': 3,
@@ -51,13 +45,19 @@ param = {
     'scale_pos_weight': 1
 }
 
-clf = xgb.XGBClassifier(**param, dtrain=dtrain)
-clf.fit(train_x, train_y)
+clf = xgb.XGBClassifier(**param)
+if conf['use_previous_model'] is False:
+    clf.fit(train_x, train_y)
+    clf.save_model('xgboost.m')
+else:
+    clf.load_model('xgboost.m')
+
 train_pred = clf.predict(train_x)
 test_pred = clf.predict(test_x)
 
 show_feature_importance(clf, conf['feature_name'])
-plot_scatter(test_y, test_pred)
+# plot_scatter(test_y, test_pred)
+plot_classification(test_y, test_pred)
 
 evaluator = Evaluator()
 
