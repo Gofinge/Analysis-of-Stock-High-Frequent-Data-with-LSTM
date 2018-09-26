@@ -1,0 +1,104 @@
+\documentclass[hyperref]{article}
+    \usepackage{graphicx} %% Package for Figure
+    \usepackage{float} %% Package for Float
+    \usepackage{amssymb}
+    \usepackage{amsmath}
+    \usepackage{mathtools}
+    \usepackage[thmmarks,amsmath]{ntheorem} %% If amsmath is applied, then amsma is necessary
+    \usepackage{bm} %% Bold Mathematical Symbols
+    \usepackage{extarrows}
+    \usepackage[hang,flushmargin]{footmisc} %% Let the footnote not indentation
+    \usepackage[square,comma,sort&compress,numbers]{natbib} %% Sort of References
+    \usepackage{mathrsfs} %% Swash letter
+    \usepackage[font=footnotesize,skip=0pt,textfont=rm,labelfont=rm]{caption,subcaption} 
+    %% Format of Caption for Tab. and Fig.
+    \usepackage{booktabs} %% tables with three lines
+    \usepackage{tocloft}
+    %+++++++++++++++ Proof etc. +++++++++++++++++++++++++%%
+    {%% Environment of Proof
+        \theoremstyle{nonumberplain}
+        \theoremheaderfont{\bfseries}
+        \theorembodyfont{\normalfont}
+        \theoremsymbol{\mbox{$\Box$}}
+        \newtheorem{proof}{Proof}
+    }
+    
+    \usepackage{theorem}
+    \newtheorem{theorem}{Theorem}[section]
+    \newtheorem{lemma}{Lemma}[section]
+    \newtheorem{definition}{Definition}[section]
+    \newtheorem{assumption}{Assumption}[section]
+    \newtheorem{example}{Example}[section]
+    \newtheorem{corollary}{Corollary}[section]
+    {%% Environment of Remark
+        \theoremheaderfont{\bfseries}
+        \theorembodyfont{\normalfont}
+        \newtheorem{remark}{Remark}[section]
+    }
+    %\numberwithin{equation}{section} %% Number of Equation
+    %++++++++++++++++++++++++++++++++ Page format ++++++++++++++++++++++++++%%
+    \graphicspath{{figure/}}                                 %% Path of Figures
+    \usepackage[a4paper]{geometry}                           %% Paper size
+    \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm} %% Margin
+    \linespread{1.2}                                         %% Line Spread
+    %MS%%%%%%%%%%%%%%%%%%%%%%%%%%%% End Format %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %MS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %MS                                         %%
+    %MS        The Main Body begins here        %%
+    %MS                                         %%
+    %MS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %MS++++++++++++++++++++++++++++++ Title +++++++++++++++++++
+    \begin{document}
+    \title{\bf A prediction model of sharing-bikes} 
+    \date{}
+    \author{\sffamily Zheng Xie, Guanglai Xu, Xiangfei Yin, Yewei Yuan\\}
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+    \footnotetext[1]{Corresponding author. }
+    \maketitle
+    
+    %MS+++++++++++++++++++++ Abstract +++++++++++++++++++++++++
+    {\noindent\small{\bf Abstract:}
+        In this paper, we construct a model based on neural network to predict the destinations 
+        of sharing-bikes. Basically, the model is composed of two system, prediction system and 
+        evaluation system. Prediction system provides several predictions of destination based 
+        on some useful constructed features. Evaluation system is a neural network which will 
+        judge each prediction given by prediction system. Finally, the predictions with highest
+        scores will be adopted. 
+         
+    }
+    
+    \vspace{1ex}
+    {\noindent\small{\bf Keywords:}
+        Keywords1; Keywords2;...}
+    %MS++++++++++++++++++++++++++++++ Main body ++++++++++++++++++++
+    \section{Introduction}
+    In general, we can figure out several different methods to predict the destination, which 
+    is what prediction system will do in the model. Some important features are needed in these 
+    method. For instance, one can assume that a bike user will head for some ‘crowded’ place , 
+    so we need to define a criteria to measure how ‘crowded’ a place is. Also, one can assume 
+    that one will return where he start in his last ride. Different methods may lead to 
+    different results, and it’s not easy to determine which method is the best for a certain 
+    record. So we are trying to teach our model to distinguish good predictions from bad 
+    predictions for each record. Here we use a simple neural network with only 1 hidden layer. 
+    When the training of neural network, which we called evaluation system in this model, is 
+    finished, we can use it to evaluate each prediction and select the one with highest score 
+    to be the best prediction we desired.
+
+    \section{Data analysis and preprocess}
+    The name of each column of raw data are as follows: order_id, user_id, bike_id, bike_type,
+    start_time, geohashed_start_location, geohashed_end_location. Geohash is a module which can
+    hash location (in the form of latitute and longitute)
+    
+    \section{Construction of features}
+
+    \section{Prediction methods}
+
+    \section{Training of model}
+
+    \section{Evaluation}
+
+    \section*{Acknowledgments}
+    %MS++++++++++++++++++++++++++++++ Reference ++++++++++++++++++
+    \end{document}

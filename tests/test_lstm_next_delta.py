@@ -67,7 +67,7 @@ print('test=', test_acc)
 
 # feature_list = lstm_conf['feature_name']
 # save_feature_selection(feature_list, acc)
-
+'''
 plt.figure(figsize=(200, 15))
 plt.plot(train_y)
 plt.plot(train_pred)
@@ -77,13 +77,13 @@ plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
 '''
-plt.figure(figsize=(200, 15))
-plt.plot(test_y)
-plt.plot(test_pred)
+plt.figure(figsize=(50, 20))
+plt.plot(test_y[0:200])
+plt.plot(test_pred[0:200])
 # plt.plot(np.arange(len(test_mid_price)), test_mid_price-8.3)
-plt.legend(['test_label', 'test_predict', 'test_mid_price - 8.3'], loc='upper right')
+plt.legend(['test_label', 'test_predict'], loc='upper right')
 plt.title('test_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
-'''
+

@@ -14,8 +14,8 @@ K.clear_session()
 
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=1,
-                 label_name=['2.5min_mean_price'],
-                 feature_name=['previous_2.5min_mean_price', 'previous_0.5min_mean_price', 'RSI_12',
+                 label_name=['VW_30s_price_delta'],
+                 feature_name=[ 'RSI_12',
                                'buy2', 'bc2', 'buy1', 'bc1', 'sale1', 'sc1', 'sale2', 'sc2', 'price',
                                'wb', 'amount', 'mid_price', 'MACD_DIF', 'MACD_DEA'],
                  training_set_proportion=0.8,
@@ -79,16 +79,16 @@ test_mid_price = mid_price[train_size:len(mid_price)]
 
 
 
-plt.figure(figsize=(200, 15))
-plt.plot(train_y)
-plt.plot(train_pred)
+plt.figure(figsize=(40, 20))
+plt.plot(train_y[0:400])
+plt.plot(train_pred[0:400])
 plt.legend(['train_label', 'train_predict'], loc='upper right')
 plt.title('train_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
 
-
+'''
 plt.figure(figsize=(200, 15))
 plt.plot(test_y)
 plt.plot(test_pred)
@@ -97,6 +97,8 @@ plt.title('test_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
+'''
+
 
 
 

@@ -9,7 +9,15 @@ conf = LSTM_Config()
 data = pd.read_csv(conf['data_file_path'], encoding='gbk')
 
 # step 2: Select Feature
-price = data['price'].values
+price = data['next_delta'].values
+x = 0
+all = 0
+for i in price:
+    all += 1
+    if abs(i) < 0.02:
+        x += 1
+print(x/all)
+
 mean_price = data['2.5min_mean_price_v2'].values
 mean_price_delta = data['2.5min_mean_price_delta'].values
 #Avg_price = data['VW_Avg_sale_price'].values

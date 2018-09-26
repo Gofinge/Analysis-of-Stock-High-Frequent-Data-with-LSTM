@@ -15,7 +15,7 @@ K.clear_session()
 lstm_conf = LSTM_Config()
 lstm_conf.update(use_previous_model=0,
                  load_file_name='lstm_next_mid_price_delta.h5',
-                 label_name=['mid_price'],
+                 label_name=['next_mid_price'],
                  feature_name=['mid_price', 'bc1', 'sc1'],
                  time_step=1,
 )

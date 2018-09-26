@@ -54,6 +54,7 @@ else:
     network.train(train_x, train_y)
     network.save(lstm_conf['save_file_name'])
 
+
 # step 5: Predict
 train_pred = network.predict(train_x)
 test_pred = network.predict(test_x)
@@ -79,7 +80,7 @@ train_mid_price = mid_price[0:train_size]
 test_mid_price = mid_price[train_size:len(mid_price)]
 
 
-
+'''
 plt.figure(figsize=(200, 15))
 plt.plot(train_y)
 plt.plot(train_pred)
@@ -88,9 +89,8 @@ plt.title('train_set plot')
 plt.xlabel('time')
 plt.ylabel('price')
 plt.show()
-
-
-plt.figure(figsize=(200, 15))
+'''
+plt.figure(figsize=(50, 10))
 plt.plot(test_y)
 plt.plot(test_pred)
 plt.legend(['test_label', 'test_predict'], loc='upper right')
