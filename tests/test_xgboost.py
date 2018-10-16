@@ -7,6 +7,7 @@ import pandas as pd
 from model.classifier import *
 import xgboost as xgb
 
+print(test)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings("ignore")
 K.clear_session()
