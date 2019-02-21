@@ -1,4 +1,4 @@
-# Analysis-of-Stock-High-Frequent-Data-with-ML
+# Analysis-of-Stock-High-Frequent-Data-with-LSTM
 
 Introduction
 ====
